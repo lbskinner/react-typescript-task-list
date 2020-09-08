@@ -1,4 +1,5 @@
 import React from "react";
+import { Container } from "./Task.styles";
 
 type TaskProps = {
   task: ITask;
@@ -6,7 +7,7 @@ type TaskProps = {
 
 class Task extends React.Component<TaskProps> {
   render() {
-    return this.props.task.content;
+    return <Container>{this.props.task.content}</Container>;
   }
 }
 
