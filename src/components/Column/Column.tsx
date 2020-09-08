@@ -1,13 +1,24 @@
-import React, { Component } from "react";
+import React from "react";
+import { Container, Title, TaskList } from "./Column.styles";
+import Task from "../Task/Task";
 
 type ColumnProps = {
   column: IColumn;
   tasks: ITask[];
 };
 
-class Column extends Component<ColumnProps> {
+class Column extends React.Component<ColumnProps> {
   render() {
-    return this.props.column.title;
+    return (
+      <Container>
+        <Title>{this.props.column.title}</Title>
+        <TaskList>
+          {this.props.tasks.map((task) => (
+            <Task key={task.id} task={task} />
+          ))}
+        </TaskList>
+      </Container>
+    );
   }
 }
 
