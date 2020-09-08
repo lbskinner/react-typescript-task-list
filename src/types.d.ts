@@ -1,24 +1,24 @@
-interface Task {
+interface ITask {
   id: string;
   content: string;
 }
 
-interface Tasks {
-  task: Task;
+interface ITasks {
+  [taskId: string]: ITask;
 }
 
-interface Column {
+interface IColumn {
   id: string;
   title: string;
   tasksIds: string[];
 }
 
-interface Columns {
-  column: Column;
+interface IColumns {
+  [columnId: string]: IColumn;
 }
 
 interface InitialData {
-  tasks: Tasks;
-  columns: Columns;
+  tasks: ITasks;
+  columns: IColumns;
   columnOrder: string[];
 }
