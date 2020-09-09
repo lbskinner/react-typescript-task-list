@@ -24,7 +24,7 @@ const initialData: InitialData = {
   },
   // Facilitate reordering of the columns
   columnOrder: ["column-1", "column-2", "column-3"],
-  homeIndex: 0,
+  //   homeIndex: 0,
 };
 
 export default initialData;
