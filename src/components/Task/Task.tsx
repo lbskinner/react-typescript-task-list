@@ -1,5 +1,5 @@
 import React from "react";
-import { Container } from "./Task.styles";
+import { Container, Handle } from "./Task.styles";
 import { Draggable } from "react-beautiful-dnd";
 
 type TaskProps = {
@@ -14,10 +14,13 @@ class Task extends React.Component<TaskProps> {
         {(provided, snapshot) => (
           <Container
             {...provided.draggableProps}
-            {...provided.dragHandleProps}
+            // leave the dragHandleProps here allows users to drag anywhere on the task
+            // {...provided.dragHandleProps}
             ref={provided.innerRef}
             isDragging={snapshot.isDragging}
           >
+            {/* created separate handle component allows users to only able to drag on the component */}
+            <Handle {...provided.dragHandleProps} />
             {this.props.task.content}
           </Container>
         )}

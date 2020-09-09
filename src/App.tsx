@@ -7,9 +7,28 @@ import { DragDropContext } from "react-beautiful-dnd";
 class App extends React.Component {
   state = initialData;
 
+  // onDragStart = () => {
+  //   document.body.style.color = "orange";
+  //   document.body.style.transition = "background-color 0.2s ease";
+  // };
+
+  // onDragUpdate = (update: any) => {
+  //   const { destination } = update;
+  //   // create variable called opacity to store the percentage of the current index based on all tasks in system
+  //   const opacity = destination
+  //     ? destination.index / Object.keys(this.state.tasks).length
+  //     : 0;
+  //   console.log(opacity);
+
+  //   // use the variable to set the background color
+  //   document.body.style.backgroundColor = `rgba(153, 141, 217, ${opacity})`;
+  // };
+
   onDragEnd = (result: any) => {
     console.log(result);
-    // TODO: reorder our column
+    document.body.style.color = "inherit";
+    document.body.style.backgroundColor = "inherit";
+
     const { destination, source, draggableId } = result;
 
     if (!destination) return;
