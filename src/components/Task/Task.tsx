@@ -1,13 +1,27 @@
 import React from "react";
 import { Container } from "./Task.styles";
+import { Draggable } from "react-beautiful-dnd";
 
 type TaskProps = {
   task: ITask;
+  index: number;
 };
 
 class Task extends React.Component<TaskProps> {
   render() {
-    return <Container>{this.props.task.content}</Container>;
+    return (
+      <Draggable draggableId={this.props.task.id} index={this.props.index}>
+        {(provided) => (
+          <Container
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            ref={provided.innerRef}
+          >
+            {this.props.task.content}
+          </Container>
+        )}
+      </Draggable>
+    );
   }
 }
 
