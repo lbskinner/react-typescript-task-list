@@ -8,6 +8,10 @@ export const Container = styled.div`
   margin: 8px;
   border: 1px solid lightgrey;
   border-radius: 2px;
+  width: 220px;
+  // add flex and flex column to display items within columns
+  display: flex;
+  flex-direction: column;
 `;
 export const Title = styled.h3`
   padding: 8px;
@@ -16,6 +20,9 @@ export const Title = styled.h3`
 `;
 export const TaskList = styled.div<ColumnStyleProps>`
   padding: 8px;
-  transition: backrgound-color 0.2s ease;
+  transition: background-color 0.2s ease;
   background-color: ${(props) => (props.isDraggingOver ? "skyblue" : "white")};
+  flex-grow: 1;
+  // have a min-height so the droppable area's height is not 0 when there are no items
+  min-height: 100px;
 `;
