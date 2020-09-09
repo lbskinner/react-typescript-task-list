@@ -8,7 +8,39 @@ class App extends React.Component {
   state = initialData;
 
   onDragEnd = (result: any) => {
+    console.log(result);
     // TODO: reorder our column
+    const { destination, source, draggableId } = result;
+
+    if (!destination) return;
+    // see if location of draggable changed
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    )
+      return;
+
+    const column = this.state.columns[source.droppableId];
+    const newTaskIds = Array.from(column.taskIds);
+    // start from this index (source.index) remove 1 item
+    newTaskIds.splice(source.index, 1);
+    // start from destination index, remove nothing and insert the draggableId
+    newTaskIds.splice(destination.index, 0, draggableId);
+
+    const newColumn = {
+      ...column,
+      taskIds: newTaskIds,
+    };
+
+    const newState = {
+      ...this.state,
+      columns: {
+        ...this.state.columns,
+        [newColumn.id]: newColumn,
+      },
+    };
+
+    this.setState(newState);
   };
 
   render() {
@@ -17,7 +49,7 @@ class App extends React.Component {
       <DragDropContext onDragEnd={this.onDragEnd}>
         {this.state.columnOrder.map((columnId: string) => {
           const column = this.state.columns[columnId];
-          const tasks = column.tasksIds.map(
+          const tasks = column.taskIds.map(
             (taskId) => this.state.tasks[taskId]
           );
           return <Column key={column.id} column={column} tasks={tasks} />;

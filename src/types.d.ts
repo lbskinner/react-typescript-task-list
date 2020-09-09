@@ -10,7 +10,7 @@ interface ITasks {
 interface IColumn {
   id: string;
   title: string;
-  tasksIds: string[];
+  taskIds: string[];
 }
 
 interface IColumns {
