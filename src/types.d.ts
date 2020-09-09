@@ -21,4 +21,5 @@ interface InitialData {
   tasks: ITasks;
   columns: IColumns;
   columnOrder: string[];
+  homeIndex: number;
 }

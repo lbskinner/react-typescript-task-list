@@ -7,10 +7,15 @@ import { Container } from "./App.styles";
 class App extends React.Component {
   state = initialData;
 
-  // onDragStart = () => {
-  //   document.body.style.color = "orange";
-  //   document.body.style.transition = "background-color 0.2s ease";
-  // };
+  onDragStart = (start: any) => {
+    // document.body.style.color = "orange";
+    // document.body.style.transition = "background-color 0.2s ease";
+    const homeIndex = this.state.columnOrder.indexOf(start.source.droppableId);
+
+    this.setState({
+      homeIndex,
+    });
+  };
 
   // onDragUpdate = (update: any) => {
   //   const { destination } = update;
@@ -25,6 +30,9 @@ class App extends React.Component {
   // };
 
   onDragEnd = (result: any) => {
+    this.setState({
+      homeIndex: null,
+    });
     console.log(result);
     // document.body.style.color = "inherit";
     // document.body.style.backgroundColor = "inherit";
@@ -107,14 +115,27 @@ class App extends React.Component {
   render() {
     return (
       // DragDropContext has three callbacks, onDragStart, onDragUpdate and onDragEnd(which is the only required one)
-      <DragDropContext onDragEnd={this.onDragEnd}>
+      <DragDropContext
+        onDragStart={this.onDragStart}
+        onDragEnd={this.onDragEnd}
+      >
         <Container>
-          {this.state.columnOrder.map((columnId: string) => {
+          {this.state.columnOrder.map((columnId: string, index) => {
             const column = this.state.columns[columnId];
             const tasks = column.taskIds.map(
               (taskId) => this.state.tasks[taskId]
             );
-            return <Column key={column.id} column={column} tasks={tasks} />;
+            // good use to prevent back drag
+            const isDropDisabled = index < this.state.homeIndex;
+
+            return (
+              <Column
+                key={column.id}
+                column={column}
+                tasks={tasks}
+                isDropDisabled={isDropDisabled}
+              />
+            );
           })}
         </Container>
       </DragDropContext>

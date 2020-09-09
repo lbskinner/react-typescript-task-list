@@ -9,8 +9,13 @@ type TaskProps = {
 
 class Task extends React.Component<TaskProps> {
   render() {
+    const isDragDisabled: boolean = this.props.task.id === "task-1";
     return (
-      <Draggable draggableId={this.props.task.id} index={this.props.index}>
+      <Draggable
+        draggableId={this.props.task.id}
+        index={this.props.index}
+        isDragDisabled={isDragDisabled}
+      >
         {(provided, snapshot) => (
           <Container
             {...provided.draggableProps}
@@ -18,6 +23,8 @@ class Task extends React.Component<TaskProps> {
             {...provided.dragHandleProps}
             ref={provided.innerRef}
             isDragging={snapshot.isDragging}
+            // included for style
+            isDragDisabled={isDragDisabled}
           >
             {/* created separate handle component allows users to only able to drag on the component */}
             {/* <Handle {...provided.dragHandleProps} /> */}

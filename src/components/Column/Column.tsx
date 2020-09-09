@@ -6,6 +6,8 @@ import Task from "../Task/Task";
 type ColumnProps = {
   column: IColumn;
   tasks: ITask[];
+  type?: string;
+  isDropDisabled?: boolean;
 };
 
 class Column extends React.Component<ColumnProps> {
@@ -13,8 +15,14 @@ class Column extends React.Component<ColumnProps> {
     return (
       <Container>
         <Title>{this.props.column.title}</Title>
-        {/* Droppable has on required prop, droppableId */}
-        <Droppable droppableId={this.props.column.id}>
+        {/* Droppable has on required prop, droppableId 
+        two methods to control where the droppable can be dropped
+        type - type={this.props.column.id === "column-3" ? "done" : "active"}
+        isDropDisabled */}
+        <Droppable
+          droppableId={this.props.column.id}
+          isDropDisabled={this.props.isDropDisabled}
+        >
           {(provided, snapshot) => (
             <TaskList
               ref={provided.innerRef}
