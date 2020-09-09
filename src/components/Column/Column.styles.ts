@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+type ColumnStyleProps = {
+  isDraggingOver: boolean;
+};
+
 export const Container = styled.div`
   margin: 8px;
   border: 1px solid lightgrey;
@@ -10,6 +14,8 @@ export const Title = styled.h3`
   font-weight: bold;
   font-size: 1.17em;
 `;
-export const TaskList = styled.div`
+export const TaskList = styled.div<ColumnStyleProps>`
   padding: 8px;
+  transition: backrgound-color 0.2s ease;
+  background-color: ${(props) => (props.isDraggingOver ? "skyblue" : "white")};
 `;

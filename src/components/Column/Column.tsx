@@ -15,8 +15,12 @@ class Column extends React.Component<ColumnProps> {
         <Title>{this.props.column.title}</Title>
         {/* Droppable has on required prop, droppableId */}
         <Droppable droppableId={this.props.column.id}>
-          {(provided) => (
-            <TaskList ref={provided.innerRef} {...provided.droppableProps}>
+          {(provided, snapshot) => (
+            <TaskList
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              isDraggingOver={snapshot.isDraggingOver}
+            >
               {this.props.tasks.map((task, index) => (
                 <Task key={task.id} task={task} index={index} />
               ))}
