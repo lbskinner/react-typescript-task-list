@@ -4,6 +4,22 @@ import Column from "./components/Column/Column";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import { Container } from "./App.styles";
 
+type ColumnProps = {
+  column: IColumn;
+  taskMap: ITasks;
+  type?: string;
+  isDropDisabled?: boolean;
+  index: number;
+};
+
+class InnerList extends React.PureComponent<ColumnProps> {
+  render() {
+    const { column, taskMap, index } = this.props;
+    const tasks = column.taskIds.map((taskId: string) => taskMap[taskId]);
+    return <Column column={column} tasks={tasks} index={index} />;
+  }
+}
+
 class App extends React.Component {
   state = initialData;
 
@@ -138,22 +154,19 @@ class App extends React.Component {
           direction="horizontal"
           type="column"
         >
-          {(provided, snapshot) => (
+          {(provided) => (
             <Container {...provided.droppableProps} ref={provided.innerRef}>
               {this.state.columnOrder.map((columnId: string, index) => {
                 const column = this.state.columns[columnId];
-                const tasks = column.taskIds.map(
-                  (taskId) => this.state.tasks[taskId]
-                );
                 // good use to prevent back drag
                 // const isDropDisabled = index < this.state.homeIndex;
+                // isDropDisabled={isDropDisabled}
 
                 return (
-                  <Column
+                  <InnerList
                     key={column.id}
                     column={column}
-                    tasks={tasks}
-                    // isDropDisabled={isDropDisabled}
+                    taskMap={this.state.tasks}
                     index={index}
                   />
                 );

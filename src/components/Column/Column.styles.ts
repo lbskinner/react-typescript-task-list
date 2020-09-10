@@ -23,7 +23,7 @@ export const TaskList = styled.div<ColumnStyleProps>`
   padding: 8px;
   transition: background-color 0.2s ease;
   background-color: ${(props) =>
-    props.isDraggingOver ? "skyblue" : "inherit"};
+    props.isDraggingOver ? "lightgrey" : "inherit"};
   flex-grow: 1;
   // have a min-height so the droppable area's height is not 0 when there are no items
   min-height: 100px;

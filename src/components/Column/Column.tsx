@@ -11,6 +11,18 @@ type ColumnProps = {
   index: number;
 };
 
+type InnerListProps = {
+  tasks: ITask[];
+};
+
+class InnerList extends React.PureComponent<InnerListProps> {
+  render() {
+    return this.props.tasks.map((task, index) => (
+      <Task key={task.id} task={task} index={index} />
+    ));
+  }
+}
+
 class Column extends React.Component<ColumnProps> {
   render() {
     return (
@@ -36,9 +48,7 @@ class Column extends React.Component<ColumnProps> {
                   {...provided.droppableProps}
                   isDraggingOver={snapshot.isDraggingOver}
                 >
-                  {this.props.tasks.map((task, index) => (
-                    <Task key={task.id} task={task} index={index} />
-                  ))}
+                  <InnerList tasks={this.props.tasks} />
                   {provided.placeholder}
                 </TaskList>
               )}

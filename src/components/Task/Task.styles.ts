@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 type TaskStyleProps = {
   isDragging: boolean;
-  isDragDisabled: boolean;
+  isDragDisabled?: boolean;
 };
 
 export const Container = styled.div<TaskStyleProps>`
