@@ -2,7 +2,16 @@ import React from "react";
 import initialData from "./initialData";
 import Column from "./components/Column/Column";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
-import { Container } from "./App.styles";
+import styled from "styled-components";
+import NavBar from "./components/NavBar/NavBar";
+
+const Container = styled.div`
+  display: flex;
+`;
+
+const OutterContainer = styled.div`
+  margin: 10px;
+`;
 
 type ColumnProps = {
   column: IColumn;
@@ -144,38 +153,44 @@ class App extends React.Component {
 
   render() {
     return (
-      // DragDropContext has three callbacks, onDragStart, onDragUpdate and onDragEnd(which is the only required one)
-      <DragDropContext
-        // onDragStart={this.onDragStart}
-        onDragEnd={this.onDragEnd}
-      >
-        <Droppable
-          droppableId="all-columns"
-          direction="horizontal"
-          type="column"
-        >
-          {(provided) => (
-            <Container {...provided.droppableProps} ref={provided.innerRef}>
-              {this.state.columnOrder.map((columnId: string, index) => {
-                const column = this.state.columns[columnId];
-                // good use to prevent back drag
-                // const isDropDisabled = index < this.state.homeIndex;
-                // isDropDisabled={isDropDisabled}
+      <>
+        <NavBar />
+        {/* DragDropContext has three callbacks, onDragStart, onDragUpdate and
+        onDragEnd(which is the only required one) */}
+        <OutterContainer>
+          <DragDropContext
+            // onDragStart={this.onDragStart}
+            onDragEnd={this.onDragEnd}
+          >
+            <Droppable
+              droppableId="all-columns"
+              direction="horizontal"
+              type="column"
+            >
+              {(provided) => (
+                <Container {...provided.droppableProps} ref={provided.innerRef}>
+                  {this.state.columnOrder.map((columnId: string, index) => {
+                    const column = this.state.columns[columnId];
+                    // good use to prevent back drag
+                    // const isDropDisabled = index < this.state.homeIndex;
+                    // isDropDisabled={isDropDisabled}
 
-                return (
-                  <InnerList
-                    key={column.id}
-                    column={column}
-                    taskMap={this.state.tasks}
-                    index={index}
-                  />
-                );
-              })}
-              {provided.placeholder}
-            </Container>
-          )}
-        </Droppable>
-      </DragDropContext>
+                    return (
+                      <InnerList
+                        key={column.id}
+                        column={column}
+                        taskMap={this.state.tasks}
+                        index={index}
+                      />
+                    );
+                  })}
+                  {provided.placeholder}
+                </Container>
+              )}
+            </Droppable>
+          </DragDropContext>
+        </OutterContainer>
+      </>
     );
   }
 }
