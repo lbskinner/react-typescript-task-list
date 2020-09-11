@@ -151,10 +151,14 @@ class App extends React.Component {
     this.setState(newState, () => console.log(this.state));
   };
 
+  handleAddColumn = () => {
+    console.log("Add Column Clicked");
+  };
+
   render() {
     return (
       <>
-        <NavBar />
+        <NavBar handleAddColumn={this.handleAddColumn} />
         {/* DragDropContext has three callbacks, onDragStart, onDragUpdate and
         onDragEnd(which is the only required one) */}
         <OutterContainer>

@@ -14,11 +14,15 @@ const Title = styled.h2`
   margin: 0;
 `;
 
-const NavBar = () => {
+type NavBarProps = {
+  handleAddColumn: (param?: any) => void;
+};
+
+const NavBar: React.FC<NavBarProps> = ({ handleAddColumn }) => {
   return (
     <Container>
       <Title>Task App</Title>
-      <Dropdown />
+      <Dropdown handleAddColumn={handleAddColumn} />
     </Container>
   );
 };
