@@ -19,13 +19,21 @@ type ColumnProps = {
   type?: string;
   isDropDisabled?: boolean;
   index: number;
+  handleAddTask: (columnId: string) => void;
 };
 
 class InnerList extends React.PureComponent<ColumnProps> {
   render() {
-    const { column, taskMap, index } = this.props;
+    const { column, taskMap, index, handleAddTask } = this.props;
     const tasks = column.taskIds.map((taskId: string) => taskMap[taskId]);
-    return <Column column={column} tasks={tasks} index={index} />;
+    return (
+      <Column
+        column={column}
+        tasks={tasks}
+        index={index}
+        handleAddTask={handleAddTask}
+      />
+    );
   }
 }
 
@@ -155,6 +163,10 @@ class App extends React.Component {
     console.log("Add Column Clicked");
   };
 
+  handleAddTask = (columnId: string) => {
+    console.log("Add Task Clicked", columnId);
+  };
+
   render() {
     return (
       <>
@@ -185,6 +197,7 @@ class App extends React.Component {
                         column={column}
                         taskMap={this.state.tasks}
                         index={index}
+                        handleAddTask={() => this.handleAddTask(columnId)}
                       />
                     );
                   })}

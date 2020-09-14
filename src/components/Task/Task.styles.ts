@@ -7,14 +7,14 @@ type TaskStyleProps = {
 
 export const Container = styled.div<TaskStyleProps>`
   border: 1px solid lightgrey;
-  border-radius: 2px;
+  border-radius: 4px;
   padding: 8px;
   margin-bottom: 8px;
   background-color: ${(props) =>
     props.isDragDisabled
       ? "lightgrey"
       : props.isDragging
-      ? "lightgreen"
+      ? "#b9faf8"
       : "white"};
 
   display: flex;

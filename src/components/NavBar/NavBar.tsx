@@ -5,13 +5,14 @@ import Dropdown from "../Dropdown/Dropdown";
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
-  background-color: skyblue;
+  background-color: #4a4584;
   margin: 0;
   padding: 6px 18px;
 `;
 
 const Title = styled.h2`
   margin: 0;
+  color: #f1f2f6;
 `;
 
 type NavBarProps = {

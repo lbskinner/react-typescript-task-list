@@ -9,11 +9,12 @@ const Container = styled.div`
 const Button = styled.button`
   padding: 0;
   border: 0;
-  background-color: skyblue;
+  background-color: #4a4584;
   cursor: pointer;
   font-size: 1.5em;
   margin-right: 8px;
   outline: 0;
+  color: #f1f2f6;
 `;
 
 const DropdownMenu = styled.div`

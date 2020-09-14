@@ -1,7 +1,9 @@
 import React from "react";
-import { Container, Title, TaskList } from "./Column.styles";
+import { Container, Title, TaskList, AddButton } from "./Column.styles";
 import { Droppable, Draggable } from "react-beautiful-dnd";
 import Task from "../Task/Task";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 type ColumnProps = {
   column: IColumn;
@@ -9,6 +11,7 @@ type ColumnProps = {
   type?: string;
   isDropDisabled?: boolean;
   index: number;
+  handleAddTask: (columnId: string) => void;
 };
 
 type InnerListProps = {
@@ -53,6 +56,12 @@ class Column extends React.Component<ColumnProps> {
                 </TaskList>
               )}
             </Droppable>
+            <AddButton
+              type="button"
+              onClick={() => this.props.handleAddTask(this.props.column.id)}
+            >
+              <FontAwesomeIcon icon={faPlus} />
+            </AddButton>
           </Container>
         )}
       </Draggable>
