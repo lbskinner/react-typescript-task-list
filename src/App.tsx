@@ -161,6 +161,21 @@ class App extends React.Component {
 
   handleAddColumn = () => {
     console.log("Add Column Clicked");
+    const newColumnId = `column-${this.state.columnOrder.length + 1}`;
+    const newState = {
+      ...this.state,
+      columns: {
+        ...this.state.columns,
+        [newColumnId]: {
+          id: newColumnId,
+          title: "New Column",
+          taskIds: [],
+        },
+      },
+      columnOrder: [...this.state.columnOrder, newColumnId],
+    };
+    this.setState(newState);
+    console.log(this.state);
   };
 
   handleAddTask = (columnId: string) => {

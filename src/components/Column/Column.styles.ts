@@ -9,7 +9,7 @@ export const Container = styled.div`
   background-color: white;
   border: 1px solid lightgrey;
   border-radius: 6px;
-  width: 220px;
+  min-width: 220px;
   // add flex and flex column to display items within columns
   display: flex;
   flex-direction: column;

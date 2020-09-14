@@ -46,11 +46,12 @@ const ListItem = styled.li`
   &:hover {
     background-color: rgba(0, 0, 0, 0.1);
     cursor: pointer;
-    background: #7ac6e46e radial-gradient(circle, transparent 1%, #7ac6e46e 1%)
+    background: #ff8600 radial-gradient(circle, transparent 1%, #ff8600 1%)
       center/15000%;
+    color: #f1f2f6;
   }
   &:active {
-    background-color: #a3d3e66e;
+    background-color: #f1f2f6;
     background-size: 100%;
     transition: background 0s;
   }

@@ -14,7 +14,7 @@ export const Container = styled.div<TaskStyleProps>`
     props.isDragDisabled
       ? "lightgrey"
       : props.isDragging
-      ? "#b9faf8"
+      ? "#aeb8fe"
       : "white"};
 
   display: flex;

@@ -8,6 +8,7 @@ const Container = styled.div`
   background-color: #4a4584;
   margin: 0;
   padding: 6px 18px;
+  width: 100%;
 `;
 
 const Title = styled.h2`
