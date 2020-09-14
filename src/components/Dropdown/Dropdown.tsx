@@ -22,9 +22,10 @@ const DropdownMenu = styled.div`
   right: 0;
   width: 100px;
   z-index: 2;
-  border: 1px solid rgba(0, 0, 0, 0.04);
+  // border: 1px solid rgba(0, 0, 0, 0.04);
   box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14);
   background-color: white;
+  border-radius: 3px;
 `;
 
 const List = styled.ul`
@@ -35,9 +36,11 @@ const List = styled.ul`
 
 const ListItem = styled.li`
   padding: 8px 12px;
-
   background-position: center;
   transition: background 0.8s;
+  font-size: 0.8em;
+  font-weight: bold;
+  border-radius: 3px;
 
   &:hover {
     background-color: rgba(0, 0, 0, 0.1);
@@ -86,8 +89,6 @@ const Dropdown: React.FC<NavBarProps> = ({ handleAddColumn }) => {
         <DropdownMenu>
           <List>
             <ListItem onClick={handleAddColumn}>Add Column</ListItem>
-            <ListItem>Option 2</ListItem>
-            <ListItem>Option 3</ListItem>
           </List>
         </DropdownMenu>
       )}
