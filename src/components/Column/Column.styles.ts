@@ -13,6 +13,7 @@ export const Container = styled.div`
   // add flex and flex column to display items within columns
   display: flex;
   flex-direction: column;
+  height: fit-content;
 `;
 export const Title = styled.h3`
   padding: 12px 8px;
@@ -26,7 +27,7 @@ export const TaskList = styled.div<ColumnStyleProps>`
   transition: background-color 0.2s ease;
   background-color: ${(props) =>
     props.isDraggingOver ? "#f1f2f6" : "inherit"};
-  flex-grow: 1;
+  // flex-grow: 1;
   // have a min-height so the droppable area's height is not 0 when there are no items
   min-height: 100px;
 `;
@@ -37,7 +38,15 @@ export const AddButton = styled.button`
   background-color: white;
   cursor: pointer;
   font-size: 1em;
-  margin: 10px;
+  margin: 10px auto;
   outline: 0;
   color: #758bfd;
+  border-radius: 50%;
+  height: 25px;
+  width: 25px;
+
+  &:hover {
+    color: #fff;
+    background-color: #758bfd;
+  }
 `;

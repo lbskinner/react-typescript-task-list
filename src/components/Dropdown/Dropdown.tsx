@@ -12,7 +12,6 @@ const Button = styled.button`
   background-color: #4a4584;
   cursor: pointer;
   font-size: 1.5em;
-  margin-right: 8px;
   outline: 0;
   color: #f1f2f6;
 `;
@@ -20,7 +19,8 @@ const Button = styled.button`
 const DropdownMenu = styled.div`
   position: absolute;
   top: 100%;
-  right: 0;
+  left: 0;
+
   width: 100px;
   z-index: 2;
   // border: 1px solid rgba(0, 0, 0, 0.04);
