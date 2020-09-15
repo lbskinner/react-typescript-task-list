@@ -15,8 +15,8 @@ export const Container = styled.div`
   flex-direction: column;
   height: fit-content;
 `;
-export const Title = styled.h3`
-  padding: 12px 8px;
+export const Title = styled.h2`
+  padding: 8px 12px;
   margin: 5px;
   background-color: #758bfd;
   border-radius: 4px;

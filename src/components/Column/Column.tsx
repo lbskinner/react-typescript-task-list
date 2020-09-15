@@ -27,14 +27,37 @@ class InnerList extends React.PureComponent<InnerListProps> {
 }
 
 class Column extends React.Component<ColumnProps> {
+  state = {
+    updateColumnTitle: false,
+    columnIdClicked: "",
+  };
+
+  handleClickColumnTitle = (columnId: string) => {
+    console.log("Clicked on Column Title", columnId);
+    this.setState({
+      updateColumnTitle: false,
+      columnIdClicked: columnId,
+    });
+  };
+
   render() {
     return (
       <Draggable draggableId={this.props.column.id} index={this.props.index}>
         {(provided, snapshot) => (
           <Container {...provided.draggableProps} ref={provided.innerRef}>
-            <Title {...provided.dragHandleProps}>
-              {this.props.column.title}
-            </Title>
+            {!this.state.updateColumnTitle &&
+            this.props.column.id !== this.state.columnIdClicked ? (
+              <Title
+                {...provided.dragHandleProps}
+                onClick={() =>
+                  this.handleClickColumnTitle(this.props.column.id)
+                }
+              >
+                {this.props.column.title}
+              </Title>
+            ) : (
+              <input type="text" defaultValue={this.props.column.title} />
+            )}
             {/* Droppable has on required prop, droppableId 
         two methods to control where the droppable can be dropped
         type - type={this.props.column.id === "column-3" ? "done" : "active"}

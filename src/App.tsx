@@ -174,8 +174,7 @@ class App extends React.Component {
       },
       columnOrder: [...this.state.columnOrder, newColumnId],
     };
-    this.setState(newState);
-    console.log(this.state);
+    this.setState(newState, () => console.log(this.state));
   };
 
   handleAddTask = (columnId: string) => {
