@@ -1,5 +1,12 @@
 import React from "react";
-import { Container, Title, TaskList, AddButton } from "./Column.styles";
+import {
+  Container,
+  Title,
+  TaskList,
+  AddButton,
+  TitleWrapper,
+  TitleInput,
+} from "./Column.styles";
 import { Droppable, Draggable } from "react-beautiful-dnd";
 import Task from "../Task/Task";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -45,19 +52,23 @@ class Column extends React.Component<ColumnProps> {
       <Draggable draggableId={this.props.column.id} index={this.props.index}>
         {(provided, snapshot) => (
           <Container {...provided.draggableProps} ref={provided.innerRef}>
-            {!this.state.updateColumnTitle &&
-            this.props.column.id !== this.state.columnIdClicked ? (
-              <Title
-                {...provided.dragHandleProps}
-                onClick={() =>
-                  this.handleClickColumnTitle(this.props.column.id)
-                }
-              >
-                {this.props.column.title}
-              </Title>
-            ) : (
-              <input type="text" defaultValue={this.props.column.title} />
-            )}
+            <TitleWrapper {...provided.dragHandleProps}>
+              {!this.state.updateColumnTitle &&
+              this.props.column.id !== this.state.columnIdClicked ? (
+                <Title
+                  onClick={() =>
+                    this.handleClickColumnTitle(this.props.column.id)
+                  }
+                >
+                  {this.props.column.title}
+                </Title>
+              ) : (
+                <TitleInput
+                  type="text"
+                  defaultValue={this.props.column.title}
+                />
+              )}
+            </TitleWrapper>
             {/* Droppable has on required prop, droppableId 
         two methods to control where the droppable can be dropped
         type - type={this.props.column.id === "column-3" ? "done" : "active"}

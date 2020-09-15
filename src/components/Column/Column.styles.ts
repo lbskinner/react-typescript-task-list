@@ -9,19 +9,39 @@ export const Container = styled.div`
   background-color: white;
   border: 1px solid lightgrey;
   border-radius: 6px;
-  min-width: 220px;
+  width: 220px;
   // add flex and flex column to display items within columns
   display: flex;
   flex-direction: column;
   height: fit-content;
 `;
-export const Title = styled.h2`
-  padding: 8px 12px;
-  margin: 5px;
+
+export const TitleWrapper = styled.div`
   background-color: #758bfd;
+  border: 1px solid lightgrey;
+  border-radius: 6px;
+  padding: 10px 20px;
+  text-align: center;
+`;
+
+export const Title = styled.h2`
+  margin: 5px;
+  cursor: text;
   border-radius: 4px;
   color: #f1f2f6;
+  text-align: center;
 `;
+
+export const TitleInput = styled.input`
+  border-radius: 6px;
+  border-style: none;
+  font-family: inherit;
+  font-size: 1.5em;
+  padding: 5px;
+  text-align: center;
+  width: 80%;
+`;
+
 export const TaskList = styled.div<ColumnStyleProps>`
   padding: 8px;
   transition: background-color 0.2s ease;
