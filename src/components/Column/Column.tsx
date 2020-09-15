@@ -37,6 +37,7 @@ class Column extends React.Component<ColumnProps> {
   state = {
     updateColumnTitle: false,
     columnIdClicked: "",
+    updatedTitle: "",
   };
 
   handleClickColumnTitle = (columnId: string) => {
@@ -45,6 +46,16 @@ class Column extends React.Component<ColumnProps> {
       updateColumnTitle: false,
       columnIdClicked: columnId,
     });
+  };
+
+  handleTitleInputChange = (event: any) => {
+    this.setState(
+      {
+        ...this.state,
+        updatedTitle: event.target.value,
+      },
+      () => console.log(this.state.updatedTitle)
+    );
   };
 
   render() {
@@ -66,6 +77,7 @@ class Column extends React.Component<ColumnProps> {
                 <TitleInput
                   type="text"
                   defaultValue={this.props.column.title}
+                  onChange={this.handleTitleInputChange}
                 />
               )}
             </TitleWrapper>
