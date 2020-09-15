@@ -17,9 +17,8 @@ interface IColumns {
   [columnId: string]: IColumn;
 }
 
-interface InitialData {
+type InitialData = {
   tasks: ITasks;
   columns: IColumns;
   columnOrder: string[];
-  // homeIndex: number;
-}
+};
