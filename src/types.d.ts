@@ -17,8 +17,15 @@ interface IColumns {
   [columnId: string]: IColumn;
 }
 
-type InitialData = {
+interface InitialData {
   tasks: ITasks;
   columns: IColumns;
   columnOrder: string[];
-};
+}
+
+interface TaskAction {
+  type: string;
+  payload: InitialData;
+}
+
+type DispatchType = (args: TaskAction) => TaskAction;
