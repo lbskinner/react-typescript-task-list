@@ -1,4 +1,6 @@
 import React from "react";
+import { connect } from "react-redux";
+import mapStoreToProps from "./store/mapStoreToProps";
 import initialData from "./initialData";
 import Column from "./components/Column/Column";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
@@ -22,6 +24,8 @@ type ColumnProps = {
   handleAddTask: (columnId: string) => void;
 };
 
+type PropsFromRedux = ReturnType<typeof mapStoreToProps>;
+
 class InnerList extends React.PureComponent<ColumnProps> {
   render() {
     const { column, taskMap, index, handleAddTask } = this.props;
@@ -37,8 +41,8 @@ class InnerList extends React.PureComponent<ColumnProps> {
   }
 }
 
-class App extends React.Component {
-  state = initialData;
+class App extends React.Component<PropsFromRedux> {
+  // state = initialData;
 
   // onDragStart = (start: any) => {
   //   // document.body.style.color = "orange";
@@ -82,12 +86,12 @@ class App extends React.Component {
     }
 
     if (type === "column") {
-      const newColumnOrder = Array.from(this.state.columnOrder);
+      const newColumnOrder = Array.from(this.props.allTasks.columnOrder);
       newColumnOrder.splice(source.index, 1);
       newColumnOrder.splice(destination.index, 0, draggableId);
 
       const newState = {
-        ...this.state,
+        ...this.props.allTasks,
         columnOrder: newColumnOrder,
       };
 
@@ -96,9 +100,9 @@ class App extends React.Component {
     }
 
     // start column
-    const start = this.state.columns[source.droppableId];
+    const start = this.props.allTasks.columns[source.droppableId];
     // finish column
-    const finish = this.state.columns[destination.droppableId];
+    const finish = this.props.allTasks.columns[destination.droppableId];
     // if item was moved within the same column
     if (start === finish) {
       // create a new array that contains the current items
@@ -116,9 +120,9 @@ class App extends React.Component {
       };
       // create new state data with updated column data
       const newState = {
-        ...this.state,
+        ...this.props.allTasks,
         columns: {
-          ...this.state.columns,
+          ...this.props.allTasks.columns,
           [newColumn.id]: newColumn,
         },
       };
@@ -149,32 +153,32 @@ class App extends React.Component {
     };
     // create new state data with updated column data for both source and destination columns
     const newState = {
-      ...this.state,
+      ...this.props.allTasks,
       columns: {
-        ...this.state.columns,
+        ...this.props.allTasks.columns,
         [newStart.id]: newStart,
         [newFinish.id]: newFinish,
       },
     };
-    this.setState(newState, () => console.log(this.state));
+    this.setState(newState, () => console.log(this.props.allTasks));
   };
 
   handleAddColumn = () => {
     console.log("Add Column Clicked");
-    const newColumnId = `column-${this.state.columnOrder.length + 1}`;
+    const newColumnId = `column-${this.props.allTasks.columnOrder.length + 1}`;
     const newState = {
       ...this.state,
       columns: {
-        ...this.state.columns,
+        ...this.props.allTasks.columns,
         [newColumnId]: {
           id: newColumnId,
           title: "New Column",
           taskIds: [],
         },
       },
-      columnOrder: [...this.state.columnOrder, newColumnId],
+      columnOrder: [...this.props.allTasks.columnOrder, newColumnId],
     };
-    this.setState(newState, () => console.log(this.state));
+    this.setState(newState, () => console.log(this.props.allTasks));
   };
 
   handleAddTask = (columnId: string) => {
@@ -199,22 +203,24 @@ class App extends React.Component {
             >
               {(provided) => (
                 <Container {...provided.droppableProps} ref={provided.innerRef}>
-                  {this.state.columnOrder.map((columnId: string, index) => {
-                    const column = this.state.columns[columnId];
-                    // good use to prevent back drag
-                    // const isDropDisabled = index < this.state.homeIndex;
-                    // isDropDisabled={isDropDisabled}
+                  {this.props.allTasks.columnOrder.map(
+                    (columnId: string, index) => {
+                      const column = this.props.allTasks.columns[columnId];
+                      // good use to prevent back drag
+                      // const isDropDisabled = index < this.state.homeIndex;
+                      // isDropDisabled={isDropDisabled}
 
-                    return (
-                      <InnerList
-                        key={column.id}
-                        column={column}
-                        taskMap={this.state.tasks}
-                        index={index}
-                        handleAddTask={() => this.handleAddTask(columnId)}
-                      />
-                    );
-                  })}
+                      return (
+                        <InnerList
+                          key={column.id}
+                          column={column}
+                          taskMap={this.props.allTasks.tasks}
+                          index={index}
+                          handleAddTask={() => this.handleAddTask(columnId)}
+                        />
+                      );
+                    }
+                  )}
                   {provided.placeholder}
                 </Container>
               )}
@@ -226,4 +232,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default connect(mapStoreToProps)(App);
