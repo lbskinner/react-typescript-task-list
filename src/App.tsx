@@ -1,7 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import mapStoreToProps from "./store/mapStoreToProps";
-import initialData from "./initialData";
+import { updateTaskData } from "./store/actionCreators";
+// import initialData from "./initialData";
 import Column from "./components/Column/Column";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import styled from "styled-components";
@@ -24,7 +25,8 @@ type ColumnProps = {
   handleAddTask: (columnId: string) => void;
 };
 
-type PropsFromRedux = ReturnType<typeof mapStoreToProps>;
+type PropsFromRedux = ReturnType<typeof mapStoreToProps> &
+  typeof mapDispatchToProps;
 
 class InnerList extends React.PureComponent<ColumnProps> {
   render() {
@@ -95,7 +97,7 @@ class App extends React.Component<PropsFromRedux> {
         columnOrder: newColumnOrder,
       };
 
-      this.setState(newState);
+      updateTaskData(newState);
       return;
     }
 
@@ -127,7 +129,7 @@ class App extends React.Component<PropsFromRedux> {
         },
       };
       // set state with new column data
-      this.setState(newState);
+      updateTaskData(newState);
       return;
     }
 
@@ -160,14 +162,15 @@ class App extends React.Component<PropsFromRedux> {
         [newFinish.id]: newFinish,
       },
     };
-    this.setState(newState, () => console.log(this.props.allTasks));
+    console.log(newState);
+    updateTaskData(newState);
   };
 
   handleAddColumn = () => {
     console.log("Add Column Clicked");
     const newColumnId = `column-${this.props.allTasks.columnOrder.length + 1}`;
     const newState = {
-      ...this.state,
+      ...this.props.allTasks,
       columns: {
         ...this.props.allTasks.columns,
         [newColumnId]: {
@@ -178,7 +181,7 @@ class App extends React.Component<PropsFromRedux> {
       },
       columnOrder: [...this.props.allTasks.columnOrder, newColumnId],
     };
-    this.setState(newState, () => console.log(this.props.allTasks));
+    updateTaskData(newState);
   };
 
   handleAddTask = (columnId: string) => {
@@ -232,4 +235,8 @@ class App extends React.Component<PropsFromRedux> {
   }
 }
 
-export default connect(mapStoreToProps)(App);
+const mapDispatchToProps = {
+  updateTaskData,
+};
+
+export default connect(mapStoreToProps, mapDispatchToProps)(App);

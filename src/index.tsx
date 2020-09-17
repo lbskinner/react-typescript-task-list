@@ -10,6 +10,8 @@ import App from "./App";
 
 const store = createStore(rootReducer, applyMiddleware(logger));
 
+// export type AppDispatch = typeof store.dispatch;
+
 ReactDOM.render(
   <Provider store={store}>
     <App />
