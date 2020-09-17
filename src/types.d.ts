@@ -28,4 +28,4 @@ interface TaskAction {
   payload: InitialData;
 }
 
-type DispatchType = (args: TaskAction) => TaskAction;
+// type DispatchType = (args: TaskAction) => TaskAction;

@@ -97,7 +97,7 @@ class App extends React.Component<PropsFromRedux> {
         columnOrder: newColumnOrder,
       };
 
-      updateTaskData(newState);
+      this.props.updateTaskData(newState);
       return;
     }
 
@@ -129,7 +129,7 @@ class App extends React.Component<PropsFromRedux> {
         },
       };
       // set state with new column data
-      updateTaskData(newState);
+      this.props.updateTaskData(newState);
       return;
     }
 
@@ -162,8 +162,7 @@ class App extends React.Component<PropsFromRedux> {
         [newFinish.id]: newFinish,
       },
     };
-    console.log(newState);
-    updateTaskData(newState);
+    this.props.updateTaskData(newState);
   };
 
   handleAddColumn = () => {
@@ -181,7 +180,7 @@ class App extends React.Component<PropsFromRedux> {
       },
       columnOrder: [...this.props.allTasks.columnOrder, newColumnId],
     };
-    updateTaskData(newState);
+    this.props.updateTaskData(newState);
   };
 
   handleAddTask = (columnId: string) => {
