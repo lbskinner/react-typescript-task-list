@@ -89,7 +89,7 @@ const Dropdown: React.FC<PropsFromRedux> = ({ updateTaskData, allTasks }) => {
   }, []);
 
   const handleAddColumn = () => {
-    console.log("Add Column Clicked");
+    setOpen(false);
     const newColumnId = `column-${allTasks.columnOrder.length + 1}`;
     const newState = {
       ...allTasks,

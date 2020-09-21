@@ -40,6 +40,10 @@ export const TitleInput = styled.input`
   padding: 5px;
   text-align: center;
   width: 80%;
+
+  &:focus {
+    outline: none;
+  }
 `;
 
 export const TaskList = styled.div<ColumnStyleProps>`

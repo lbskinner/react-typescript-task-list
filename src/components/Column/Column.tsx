@@ -1,4 +1,4 @@
-import React from "react";
+import React, { KeyboardEvent } from "react";
 import { connect } from "react-redux";
 import mapStoreToProps from "../../store/mapStoreToProps";
 import mapDispatchToProps from "../../store/mapDispatchToProps";
@@ -56,13 +56,6 @@ class Column extends React.Component<PropsFromRedux & ColumnProps> {
   }
 
   handleSaveTitle = (event: MouseEvent) => {
-    if (!this.state.updatedTitle) {
-      this.setState({
-        updateColumnTitle: false,
-        columnIdClicked: "",
-      });
-      return;
-    }
     if (
       this.titleRef.current &&
       !this.titleRef.current.contains(event.target as HTMLInputElement)
@@ -72,6 +65,9 @@ class Column extends React.Component<PropsFromRedux & ColumnProps> {
         updateColumnTitle: false,
         columnIdClicked: "",
       });
+      // if no changes made to title exit function
+      if (!this.state.updatedTitle) return;
+
       const newState = {
         ...this.props.allTasks,
         columns: {
@@ -88,7 +84,6 @@ class Column extends React.Component<PropsFromRedux & ColumnProps> {
   };
 
   handleClickColumnTitle = (columnId: string) => {
-    console.log("Clicked on Column Title", columnId);
     this.setState({
       updateColumnTitle: false,
       columnIdClicked: columnId,
@@ -100,6 +95,31 @@ class Column extends React.Component<PropsFromRedux & ColumnProps> {
       ...this.state,
       updatedTitle: event.target.value,
     });
+  };
+
+  handlePressEnterKey = (event: KeyboardEvent) => {
+    if (event.key === "Enter") {
+      const columnId = this.state.columnIdClicked;
+      this.setState({
+        updateColumnTitle: false,
+        columnIdClicked: "",
+      });
+      // if no changes made to title exit function
+      if (!this.state.updatedTitle) return;
+
+      const newState = {
+        ...this.props.allTasks,
+        columns: {
+          ...this.props.allTasks.columns,
+          [columnId]: {
+            ...this.props.allTasks.columns[columnId],
+            title: this.state.updatedTitle,
+          },
+        },
+      };
+
+      this.props.updateTaskData(newState);
+    }
   };
 
   render() {
@@ -125,6 +145,7 @@ class Column extends React.Component<PropsFromRedux & ColumnProps> {
                   autoFocus
                   onFocus={(e) => e.currentTarget.select()}
                   ref={this.titleRef}
+                  onKeyDown={this.handlePressEnterKey}
                 />
               )}
             </TitleWrapper>
