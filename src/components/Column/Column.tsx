@@ -1,4 +1,7 @@
 import React from "react";
+import { connect } from "react-redux";
+import mapStoreToProps from "../../store/mapStoreToProps";
+import mapDispatchToProps from "../../store/mapDispatchToProps";
 import {
   Container,
   Title,
@@ -25,6 +28,9 @@ type InnerListProps = {
   tasks: ITask[];
 };
 
+type PropsFromRedux = ReturnType<typeof mapStoreToProps> &
+  typeof mapDispatchToProps;
+
 class InnerList extends React.PureComponent<InnerListProps> {
   render() {
     return this.props.tasks.map((task, index) => (
@@ -33,11 +39,50 @@ class InnerList extends React.PureComponent<InnerListProps> {
   }
 }
 
-class Column extends React.Component<ColumnProps> {
+class Column extends React.Component<PropsFromRedux & ColumnProps> {
+  titleRef = React.createRef<HTMLInputElement>();
   state = {
     updateColumnTitle: false,
     columnIdClicked: "",
     updatedTitle: "",
+  };
+
+  componentDidMount() {
+    document.addEventListener("mousedown", this.handleSaveTitle);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("mousedown", this.handleSaveTitle);
+  }
+
+  handleSaveTitle = (event: MouseEvent) => {
+    console.log(this.titleRef.current);
+    if (
+      this.titleRef.current &&
+      !this.titleRef.current.contains(event.target as HTMLInputElement)
+    ) {
+      const columnId = this.state.columnIdClicked;
+      this.setState({
+        updateColumnTitle: false,
+        columnIdClicked: "",
+      });
+
+      console.log({ columnId });
+
+      const newState = {
+        ...this.props.allTasks,
+        columns: {
+          ...this.props.allTasks.columns,
+          [columnId]: {
+            ...this.props.allTasks.columns[columnId],
+            title: this.state.updatedTitle,
+          },
+        },
+      };
+      console.log(newState);
+
+      this.props.updateTaskData(newState);
+    }
   };
 
   handleClickColumnTitle = (columnId: string) => {
@@ -78,6 +123,9 @@ class Column extends React.Component<ColumnProps> {
                   type="text"
                   defaultValue={this.props.column.title}
                   onChange={this.handleTitleInputChange}
+                  autoFocus
+                  onFocus={(e) => e.currentTarget.select()}
+                  ref={this.titleRef}
                 />
               )}
             </TitleWrapper>
@@ -115,4 +163,4 @@ class Column extends React.Component<ColumnProps> {
   }
 }
 
-export default Column;
+export default connect(mapStoreToProps, mapDispatchToProps)(Column);
