@@ -1,4 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
+import { connect } from "react-redux";
+import mapStoreToProps from "../../store/mapStoreToProps";
+import mapDispatchToProps from "../../store/mapDispatchToProps";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -56,11 +59,14 @@ const ListItem = styled.li`
     transition: background 0s;
   }
 `;
-type NavBarProps = {
-  handleAddColumn: (param?: any) => void;
-};
+// type NavBarProps = {
+//   handleAddColumn: (param?: any) => void;
+// };
 
-const Dropdown: React.FC<NavBarProps> = ({ handleAddColumn }) => {
+type PropsFromRedux = ReturnType<typeof mapStoreToProps> &
+  typeof mapDispatchToProps;
+
+const Dropdown: React.FC<PropsFromRedux> = ({ updateTaskData, allTasks }) => {
   const container = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState<boolean>(false);
 
@@ -82,6 +88,24 @@ const Dropdown: React.FC<NavBarProps> = ({ handleAddColumn }) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const handleAddColumn = () => {
+    console.log("Add Column Clicked");
+    const newColumnId = `column-${allTasks.columnOrder.length + 1}`;
+    const newState = {
+      ...allTasks,
+      columns: {
+        ...allTasks.columns,
+        [newColumnId]: {
+          id: newColumnId,
+          title: "New Column",
+          taskIds: [],
+        },
+      },
+      columnOrder: [...allTasks.columnOrder, newColumnId],
+    };
+    updateTaskData(newState);
+  };
+
   return (
     <Container ref={container}>
       <Button type="button" onClick={toggleMenu}>
@@ -98,4 +122,4 @@ const Dropdown: React.FC<NavBarProps> = ({ handleAddColumn }) => {
   );
 };
 
-export default Dropdown;
+export default connect(mapStoreToProps, mapDispatchToProps)(Dropdown);

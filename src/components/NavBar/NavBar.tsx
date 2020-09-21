@@ -16,16 +16,16 @@ const Title = styled.h1`
   color: #f1f2f6;
 `;
 
-type NavBarProps = {
-  handleAddColumn: (param?: any) => void;
-};
+// type NavBarProps = {
+//   handleAddColumn: (param?: any) => void;
+// };
 
-const NavBar: React.FC<NavBarProps> = ({ handleAddColumn }) => {
+const NavBar: React.FC = () => {
   return (
     <Container>
       <Title>Task App</Title>
 
-      <Dropdown handleAddColumn={handleAddColumn} />
+      <Dropdown />
     </Container>
   );
 };
