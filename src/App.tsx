@@ -30,8 +30,6 @@ type PropsFromRedux = ReturnType<typeof mapStoreToProps> &
 class InnerList extends React.PureComponent<ColumnProps> {
   render() {
     const { column, taskMap, index, handleAddTask } = this.props;
-    console.log({ column });
-
     const tasks = column.taskIds.map((taskId: string) => taskMap[taskId]);
     return (
       <Column

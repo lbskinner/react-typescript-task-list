@@ -56,7 +56,13 @@ class Column extends React.Component<PropsFromRedux & ColumnProps> {
   }
 
   handleSaveTitle = (event: MouseEvent) => {
-    console.log(this.titleRef.current);
+    if (!this.state.updatedTitle) {
+      this.setState({
+        updateColumnTitle: false,
+        columnIdClicked: "",
+      });
+      return;
+    }
     if (
       this.titleRef.current &&
       !this.titleRef.current.contains(event.target as HTMLInputElement)
@@ -66,9 +72,6 @@ class Column extends React.Component<PropsFromRedux & ColumnProps> {
         updateColumnTitle: false,
         columnIdClicked: "",
       });
-
-      console.log({ columnId });
-
       const newState = {
         ...this.props.allTasks,
         columns: {
@@ -79,7 +82,6 @@ class Column extends React.Component<PropsFromRedux & ColumnProps> {
           },
         },
       };
-      console.log(newState);
 
       this.props.updateTaskData(newState);
     }
@@ -94,13 +96,10 @@ class Column extends React.Component<PropsFromRedux & ColumnProps> {
   };
 
   handleTitleInputChange = (event: any) => {
-    this.setState(
-      {
-        ...this.state,
-        updatedTitle: event.target.value,
-      },
-      () => console.log(this.state.updatedTitle)
-    );
+    this.setState({
+      ...this.state,
+      updatedTitle: event.target.value,
+    });
   };
 
   render() {
