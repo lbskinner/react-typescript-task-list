@@ -1,8 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import mapStoreToProps from "./store/mapStoreToProps";
-import { updateTaskData } from "./store/actionCreators";
-// import initialData from "./initialData";
+import mapDispatchToProps from "./store/mapDispatchToProps";
 import Column from "./components/Column/Column";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import styled from "styled-components";
@@ -44,37 +43,9 @@ class InnerList extends React.PureComponent<ColumnProps> {
 }
 
 class App extends React.Component<PropsFromRedux> {
-  // state = initialData;
-
-  // onDragStart = (start: any) => {
-  //   // document.body.style.color = "orange";
-  //   // document.body.style.transition = "background-color 0.2s ease";
-  //   const homeIndex = this.state.columnOrder.indexOf(start.source.droppableId);
-
-  //   this.setState({
-  //     homeIndex,
-  //   });
-  // };
-
-  // onDragUpdate = (update: any) => {
-  //   const { destination } = update;
-  //   // create variable called opacity to store the percentage of the current index based on all tasks in system
-  //   const opacity = destination
-  //     ? destination.index / Object.keys(this.state.tasks).length
-  //     : 0;
-  //   console.log(opacity);
-
-  //   // use the variable to set the background color
-  //   document.body.style.backgroundColor = `rgba(153, 141, 217, ${opacity})`;
-  // };
-
   onDragEnd = (result: any) => {
-    // this.setState({
-    //   homeIndex: null,
-    // });
     console.log(result);
-    // document.body.style.color = "inherit";
-    // document.body.style.backgroundColor = "inherit";
+    document.body.style.backgroundColor = "inherit";
 
     const { destination, source, draggableId, type } = result;
     // do nothing if item is dropped outside of the list
@@ -233,9 +204,5 @@ class App extends React.Component<PropsFromRedux> {
     );
   }
 }
-
-const mapDispatchToProps = {
-  updateTaskData,
-};
 
 export default connect(mapStoreToProps, mapDispatchToProps)(App);
