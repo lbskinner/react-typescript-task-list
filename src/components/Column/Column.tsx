@@ -123,6 +123,10 @@ class Column extends React.Component<PropsFromRedux & ColumnProps> {
     }
   };
 
+  handleDeleteColumn = (columnId: string) => {
+    console.log("Delete Column Clicked", columnId);
+  };
+
   render() {
     return (
       <Draggable draggableId={this.props.column.id} index={this.props.index}>
@@ -149,7 +153,10 @@ class Column extends React.Component<PropsFromRedux & ColumnProps> {
                   onKeyDown={this.handlePressEnterKey}
                 />
               )}
-              <DeleteButton>
+              <DeleteButton
+                type="button"
+                onClick={() => this.handleDeleteColumn(this.props.column.id)}
+              >
                 <FontAwesomeIcon icon={faTrash} />
               </DeleteButton>
             </TitleWrapper>
