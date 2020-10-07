@@ -45,18 +45,20 @@ const ListItem = styled.li`
   font-size: 0.8em;
   font-weight: bold;
   border-radius: 3px;
+  color: #4a4584;
 
   &:hover {
-    background-color: rgba(0, 0, 0, 0.1);
     cursor: pointer;
-    background: #758bfd radial-gradient(circle, transparent 1%, #758bfd 1%)
-      center/15000%;
-    color: #f1f2f6;
+    color: #758bfd;
+    // below are for clicking effect, did not use
+    // background-color: rgba(0, 0, 0, 0.1);
+    // background: #758bfd radial-gradient(circle, transparent 1%, #758bfd 1%)
+    //   center/15000%;
   }
-  &:active {
-    background-color: #f1f2f6;
-    background-size: 100%;
-    transition: background 0s;
+  // &:active {
+  //   background-color: #f1f2f6;
+  //   background-size: 100%;
+  // transition: background 0s;
   }
 `;
 // type NavBarProps = {
