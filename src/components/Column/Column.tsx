@@ -9,11 +9,12 @@ import {
   AddButton,
   TitleWrapper,
   TitleInput,
+  DeleteButton,
 } from "./Column.styles";
 import { Droppable, Draggable } from "react-beautiful-dnd";
 import Task from "../Task/Task";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 type ColumnProps = {
   column: IColumn;
@@ -148,6 +149,9 @@ class Column extends React.Component<PropsFromRedux & ColumnProps> {
                   onKeyDown={this.handlePressEnterKey}
                 />
               )}
+              <DeleteButton>
+                <FontAwesomeIcon icon={faTrash} />
+              </DeleteButton>
             </TitleWrapper>
             {/* Droppable has on required prop, droppableId 
         two methods to control where the droppable can be dropped

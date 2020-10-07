@@ -21,7 +21,9 @@ export const TitleWrapper = styled.div`
   border: 1px solid lightgrey;
   border-radius: 6px;
   padding: 10px 20px;
-  text-align: center;
+  // text-align: center;
+  display: flex;
+  justify-content: space-between;
 `;
 
 export const Title = styled.h2`
@@ -38,7 +40,7 @@ export const TitleInput = styled.input`
   font-family: inherit;
   font-size: 1.5em;
   padding: 5px;
-  text-align: center;
+  // text-align: center;
   width: 80%;
 
   &:focus {
@@ -72,5 +74,22 @@ export const AddButton = styled.button`
   &:hover {
     color: #fff;
     background-color: #758bfd;
+  }
+`;
+
+export const DeleteButton = styled.button`
+  padding: 0;
+  border: 0;
+  background-color: #758bfd;
+  cursor: pointer;
+  font-size: 1em;
+  margin: 10px 0;
+  outline: 0;
+  color: #fff;
+  height: 15px;
+  width: 15px;
+
+  &:hover {
+    color: #ff3c00;
   }
 `;
