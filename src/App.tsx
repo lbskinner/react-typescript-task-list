@@ -136,24 +136,6 @@ class App extends React.Component<PropsFromRedux> {
     this.props.updateTaskData(newState);
   };
 
-  // handleAddColumn = () => {
-  //   console.log("Add Column Clicked");
-  //   const newColumnId = `column-${this.props.allTasks.columnOrder.length + 1}`;
-  //   const newState = {
-  //     ...this.props.allTasks,
-  //     columns: {
-  //       ...this.props.allTasks.columns,
-  //       [newColumnId]: {
-  //         id: newColumnId,
-  //         title: "New Column",
-  //         taskIds: [],
-  //       },
-  //     },
-  //     columnOrder: [...this.props.allTasks.columnOrder, newColumnId],
-  //   };
-  //   this.props.updateTaskData(newState);
-  // };
-
   handleAddTask = (columnId: string) => {
     console.log("Add Task Clicked", columnId);
   };
