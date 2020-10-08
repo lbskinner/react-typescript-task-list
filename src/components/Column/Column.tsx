@@ -124,32 +124,35 @@ class Column extends React.Component<PropsFromRedux & ColumnProps> {
   };
 
   handleDeleteColumn = (columnId: string) => {
-    console.log("Delete Column Clicked", columnId);
+    // pull current columns object from all tasks reducer
     const updatedColumns = this.props.allTasks.columns;
+    // check to see if there are tasks in the column the user wants to delete
     if (updatedColumns[columnId].taskIds.length > 0) {
+      // if there are tasks in the current column, pop up a window to ask user to confirm
       if (
         window.confirm(
           `Deleting the column will also delete the tasks in this column. Are you sure you want to delete the "${updatedColumns[columnId].title}" column?`
         ) === false
       ) {
+        // is user does not want to delete the column with tasks in it, exit
         return;
       }
     }
-    console.log("confirmed deletion");
+    // if user wants to delete the column
+    // (either no tasks in column or user confirmed deletion)
+    // delete the column with using the columnId
     delete updatedColumns[columnId];
-    console.log(updatedColumns);
-
+    // delete the column from the columnOder array
     const updatedColumnOrder = this.props.allTasks.columnOrder.filter(
       (column) => column !== columnId
     );
-    console.log(updatedColumnOrder);
-
+    // create new state with updated column data
     const newState = {
       ...this.props.allTasks,
       columns: updatedColumns,
       columnOrder: updatedColumnOrder,
     };
-    console.log(newState);
+    // set state/reducer with new column data
     this.props.updateTaskData(newState);
   };
 
