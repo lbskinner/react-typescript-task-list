@@ -125,6 +125,32 @@ class Column extends React.Component<PropsFromRedux & ColumnProps> {
 
   handleDeleteColumn = (columnId: string) => {
     console.log("Delete Column Clicked", columnId);
+    const updatedColumns = this.props.allTasks.columns;
+    if (updatedColumns[columnId].taskIds.length > 0) {
+      if (
+        window.confirm(
+          `Deleting the column will also delete the tasks in this column. Are you sure you want to delete the "${updatedColumns[columnId].title}" column?`
+        ) === false
+      ) {
+        return;
+      }
+    }
+    console.log("confirmed deletion");
+    delete updatedColumns[columnId];
+    console.log(updatedColumns);
+
+    const updatedColumnOrder = this.props.allTasks.columnOrder.filter(
+      (column) => column !== columnId
+    );
+    console.log(updatedColumnOrder);
+
+    const newState = {
+      ...this.props.allTasks,
+      columns: updatedColumns,
+      columnOrder: updatedColumnOrder,
+    };
+    console.log(newState);
+    this.props.updateTaskData(newState);
   };
 
   render() {
