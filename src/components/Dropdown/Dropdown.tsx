@@ -121,21 +121,14 @@ const Dropdown: React.FC<PropsFromRedux> = ({ updateTaskData, allTasks }) => {
   };
 
   return (
-    <Container>
+    <Container
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+    >
       {/* <Container ref={container}> */}
-      <Button
-        type="button"
-        // onClick={toggleMenu}
-        onMouseEnter={() => setOpen(true)}
-        onMouseLeave={() => setOpen(false)}
-      >
-        ☰
-      </Button>
+      <Button type="button">☰</Button>
       {open && (
-        <DropdownMenu
-          onMouseEnter={() => setOpen(true)}
-          onMouseLeave={() => setOpen(false)}
-        >
+        <DropdownMenu>
           <List>
             <ListItem onClick={handleAddColumn}>Add Column</ListItem>
           </List>
