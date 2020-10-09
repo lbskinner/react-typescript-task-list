@@ -92,7 +92,15 @@ const Dropdown: React.FC<PropsFromRedux> = ({ updateTaskData, allTasks }) => {
 
   const handleAddColumn = () => {
     setOpen(false);
-    const newColumnId = `column-${allTasks.columnOrder.length + 1}`;
+    const currentColumnIds = Object.keys(allTasks.columns);
+    const lastColumnId = currentColumnIds[currentColumnIds.length - 1];
+    console.log(lastColumnId);
+    const lastColumnIdNum = parseInt(
+      lastColumnId.charAt(lastColumnId.length - 1)
+    );
+    console.log(lastColumnIdNum);
+
+    const newColumnId = `column-${lastColumnIdNum + 1}`;
     const newState = {
       ...allTasks,
       columns: {

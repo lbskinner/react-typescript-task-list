@@ -158,6 +158,7 @@ class Column extends React.Component<PropsFromRedux & ColumnProps> {
 
   handleAddTask = (columnId: string) => {
     console.log("Add Task Clicked", columnId);
+    // const newTaskId = `task-${this.props.tasks}`
   };
 
   render() {
