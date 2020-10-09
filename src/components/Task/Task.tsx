@@ -1,6 +1,8 @@
 import React from "react";
 import { Container } from "./Task.styles";
 import { Draggable } from "react-beautiful-dnd";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPen, faCheck, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 type TaskProps = {
   task: ITask;
@@ -29,6 +31,15 @@ class Task extends React.Component<TaskProps> {
             {/* created separate handle component allows users to only able to drag on the component */}
             {/* <Handle {...provided.dragHandleProps} /> */}
             {this.props.task.content}
+            <button>
+              <FontAwesomeIcon icon={faPen} />
+            </button>
+            <button>
+              <FontAwesomeIcon icon={faCheck} />
+            </button>
+            <button>
+              <FontAwesomeIcon icon={faTrash} />
+            </button>
           </Container>
         )}
       </Draggable>

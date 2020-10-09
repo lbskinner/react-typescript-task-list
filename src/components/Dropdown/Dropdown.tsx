@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import mapStoreToProps from "../../store/mapStoreToProps";
 import mapDispatchToProps from "../../store/mapDispatchToProps";
@@ -50,48 +50,48 @@ const ListItem = styled.li`
   &:hover {
     cursor: pointer;
     color: #758bfd;
-    // below are for clicking effect, did not use
-    // background-color: rgba(0, 0, 0, 0.1);
-    // background: #758bfd radial-gradient(circle, transparent 1%, #758bfd 1%)
-    //   center/15000%;
+    below are for clicking effect, did not use
+    background-color: rgba(0, 0, 0, 0.1);
+    background: #fff radial-gradient(circle, transparent 1%, #fff 1%)
+      center/15000%;
   }
-  // &:active {
-  //   background-color: #f1f2f6;
-  //   background-size: 100%;
-  // transition: background 0s;
+  &:active {
+    background-color: #bdb2ff;
+    background-size: 100%;
+  transition: background 0s;
   }
 `;
-// type NavBarProps = {
-//   handleAddColumn: (param?: any) => void;
-// };
 
 type PropsFromRedux = ReturnType<typeof mapStoreToProps> &
   typeof mapDispatchToProps;
 
 const Dropdown: React.FC<PropsFromRedux> = ({ updateTaskData, allTasks }) => {
-  const container = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState<boolean>(false);
 
-  const toggleMenu = () => {
-    setOpen(!open);
-  };
+  // use toggle for open and close dropdown menu when click on menu button
+  // changed approach to mouse hover
+  // const toggleMenu = () => {
+  //   setOpen(!open);
+  // };
 
-  const handleClickOutside = (event: MouseEvent) => {
-    if (
-      container.current &&
-      !container.current.contains(event.target as Element)
-    ) {
-      setOpen(false);
-    }
-  };
+  // used useRef and useEffect for close dropdown menu
+  // when click other areas of app
+  // const handleClickOutside = (event: MouseEvent) => {
+  //   if (
+  //     container.current &&
+  //     !container.current.contains(event.target as Element)
+  //   ) {
+  //     setOpen(false);
+  //   }
+  // };
 
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  // useEffect(() => {
+  //   document.addEventListener("mousedown", handleClickOutside);
+  //   return () => document.removeEventListener("mousedown", handleClickOutside);
+  // }, []);
 
   const handleAddColumn = () => {
-    setOpen(false);
+    // setOpen(false);
     // store all current column ids in an array
     const currentColumnIds = Object.keys(allTasks.columns);
     // get the last column id
@@ -121,12 +121,21 @@ const Dropdown: React.FC<PropsFromRedux> = ({ updateTaskData, allTasks }) => {
   };
 
   return (
-    <Container ref={container}>
-      <Button type="button" onClick={toggleMenu}>
+    <Container>
+      {/* <Container ref={container}> */}
+      <Button
+        type="button"
+        // onClick={toggleMenu}
+        onMouseEnter={() => setOpen(true)}
+        onMouseLeave={() => setOpen(false)}
+      >
         ☰
       </Button>
       {open && (
-        <DropdownMenu>
+        <DropdownMenu
+          onMouseEnter={() => setOpen(true)}
+          onMouseLeave={() => setOpen(false)}
+        >
           <List>
             <ListItem onClick={handleAddColumn}>Add Column</ListItem>
           </List>
