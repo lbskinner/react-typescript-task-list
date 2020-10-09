@@ -21,7 +21,7 @@ type ColumnProps = {
   type?: string;
   isDropDisabled?: boolean;
   index: number;
-  handleAddTask: (columnId: string) => void;
+  // handleAddTask: (columnId: string) => void;
 };
 
 type PropsFromRedux = ReturnType<typeof mapStoreToProps> &
@@ -29,14 +29,14 @@ type PropsFromRedux = ReturnType<typeof mapStoreToProps> &
 
 class InnerList extends React.PureComponent<ColumnProps> {
   render() {
-    const { column, taskMap, index, handleAddTask } = this.props;
+    const { column, taskMap, index } = this.props;
     const tasks = column.taskIds.map((taskId: string) => taskMap[taskId]);
     return (
       <Column
         column={column}
         tasks={tasks}
         index={index}
-        handleAddTask={handleAddTask}
+        // handleAddTask={handleAddTask}
       />
     );
   }
@@ -136,10 +136,6 @@ class App extends React.Component<PropsFromRedux> {
     this.props.updateTaskData(newState);
   };
 
-  handleAddTask = (columnId: string) => {
-    console.log("Add Task Clicked", columnId);
-  };
-
   render() {
     return (
       <>
@@ -171,7 +167,7 @@ class App extends React.Component<PropsFromRedux> {
                           column={column}
                           taskMap={this.props.allTasks.tasks}
                           index={index}
-                          handleAddTask={() => this.handleAddTask(columnId)}
+                          // handleAddTask={() => this.handleAddTask(columnId)}
                         />
                       );
                     }

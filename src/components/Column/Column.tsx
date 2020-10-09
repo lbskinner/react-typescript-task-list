@@ -22,7 +22,7 @@ type ColumnProps = {
   type?: string;
   isDropDisabled?: boolean;
   index: number;
-  handleAddTask: (columnId: string) => void;
+  // handleAddTask: (columnId: string) => void;
 };
 
 type InnerListProps = {
@@ -156,6 +156,10 @@ class Column extends React.Component<PropsFromRedux & ColumnProps> {
     this.props.updateTaskData(newState);
   };
 
+  handleAddTask = (columnId: string) => {
+    console.log("Add Task Clicked", columnId);
+  };
+
   render() {
     return (
       <Draggable draggableId={this.props.column.id} index={this.props.index}>
@@ -212,7 +216,7 @@ class Column extends React.Component<PropsFromRedux & ColumnProps> {
             </Droppable>
             <AddButton
               type="button"
-              onClick={() => this.props.handleAddTask(this.props.column.id)}
+              onClick={() => this.handleAddTask(this.props.column.id)}
             >
               <FontAwesomeIcon icon={faPlus} />
             </AddButton>
