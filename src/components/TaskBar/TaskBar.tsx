@@ -21,17 +21,43 @@ const ToolButton = styled.button`
   }
 `;
 
-const TaskBar = () => {
+type TaskBarProps = {
+  taskId: string;
+};
+
+const TaskBar: React.FC<TaskBarProps> = ({ taskId }) => {
+  const handleClickEdit = (taskId: string) => {
+    console.log("====================================");
+    console.log("Edit Button Clicked", taskId);
+    console.log("====================================");
+  };
+  const handleClickCheck = (taskId: string) => {
+    console.log("====================================");
+    console.log("Check Button Clicked", taskId);
+    console.log("====================================");
+  };
+  const handleClickDelete = (taskId: string) => {
+    console.log("====================================");
+    console.log("Delete Button Clicked", taskId);
+    console.log("====================================");
+  };
+
   return (
     <ToolBar>
       <ToolButton>
-        <FontAwesomeIcon icon={faPen} />
+        <FontAwesomeIcon icon={faPen} onClick={() => handleClickEdit(taskId)} />
       </ToolButton>
       <ToolButton>
-        <FontAwesomeIcon icon={faCheck} />
+        <FontAwesomeIcon
+          icon={faCheck}
+          onClick={() => handleClickCheck(taskId)}
+        />
       </ToolButton>
       <ToolButton>
-        <FontAwesomeIcon icon={faTrash} />
+        <FontAwesomeIcon
+          icon={faTrash}
+          onClick={() => handleClickDelete(taskId)}
+        />
       </ToolButton>
     </ToolBar>
   );

@@ -30,7 +30,7 @@ class Task extends React.Component<TaskProps> {
             {/* created separate handle component allows users to only able to drag on the component */}
             {/* <Handle {...provided.dragHandleProps} /> */}
             {this.props.task.content}
-            <TaskBar />
+            <TaskBar taskId={this.props.task.id} />
           </Container>
         )}
       </Draggable>
