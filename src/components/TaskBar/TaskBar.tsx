@@ -29,10 +29,15 @@ type TaskBarProps = {
   taskId: string;
 };
 
+// const spans = document.getElementsByTagName("span");
+
 const TaskBar: React.FC<TaskBarProps> = ({ taskId }) => {
   const handleClickEdit = (taskId: string) => {
     console.log("====================================");
     console.log("Edit Button Clicked", taskId);
+    // const span = document.querySelector(`.${taskId}`);
+    // console.log(spans);
+    // console.log(span?.clientWidth);
     console.log("====================================");
   };
 
