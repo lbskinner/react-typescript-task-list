@@ -18,6 +18,7 @@ export const Container = styled.div<TaskStyleProps>`
       : "white"};
 
   display: flex;
+  position: relative;
 `;
 
 export const Handle = styled.div`

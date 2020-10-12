@@ -4,14 +4,18 @@ import { faPen, faCheck, faTrash } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 
 const ToolBar = styled.div`
-  border: 1px solid gray;
+  border: 1px solid lightgray;
   border-radius: 3px;
+  position: absolute;
+  transform: translateY(-100%);
+  left: 50%;
+  background-color: white;
 `;
 
 const ToolButton = styled.button`
   background: none;
   cursor: pointer;
-  font-size: 0.7em;
+  font-size: 0.8em;
   outline: 0;
   padding: 2px 4px;
   border: 0;
@@ -31,11 +35,13 @@ const TaskBar: React.FC<TaskBarProps> = ({ taskId }) => {
     console.log("Edit Button Clicked", taskId);
     console.log("====================================");
   };
+
   const handleClickCheck = (taskId: string) => {
     console.log("====================================");
     console.log("Check Button Clicked", taskId);
     console.log("====================================");
   };
+
   const handleClickDelete = (taskId: string) => {
     console.log("====================================");
     console.log("Delete Button Clicked", taskId);
