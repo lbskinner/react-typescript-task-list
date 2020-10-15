@@ -24,6 +24,7 @@ export const TitleWrapper = styled.div`
   // text-align: center;
   display: flex;
   justify-content: space-between;
+  width: 81%;
 `;
 
 export const Title = styled.h2`
