@@ -81,13 +81,6 @@ class Task extends React.Component<PropsFromRedux & TaskProps> {
             {/* <Handle {...provided.dragHandleProps} /> */}
             <ToolButton checkDisabled={this.state.checkDisabled}>
               <FontAwesomeIcon
-                // style={
-                //   this.state.checkDisabled
-                //     ? {
-                //         cursor: "not-allowed",
-                //       }
-                //     : {}
-                // }
                 icon={this.props.task.complete ? faCheckCircle : faCircle}
                 onClick={() =>
                   this.handleClickCheckTask(
