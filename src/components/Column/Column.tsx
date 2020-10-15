@@ -171,6 +171,7 @@ class Column extends React.Component<PropsFromRedux & ColumnProps> {
         [newTaskId]: {
           id: newTaskId,
           content: "New task",
+          complete: false,
         },
       },
       columns: {

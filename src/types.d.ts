@@ -1,6 +1,7 @@
 interface ITask {
   id: string;
   content: string;
+  complete: boolean;
 }
 
 interface ITasks {
