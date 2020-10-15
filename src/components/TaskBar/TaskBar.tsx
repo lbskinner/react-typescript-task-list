@@ -20,7 +20,7 @@ const ToolButton = styled.button`
   cursor: pointer;
   font-size: 0.8em;
   outline: 0;
-  padding: 2px 4px;
+  padding: 2px 6px;
   border: 0;
 
   &:hover {
@@ -52,19 +52,19 @@ const TaskBar: React.FC<PropsFromRedux & TaskBarProps> = ({
     console.log("====================================");
   };
 
-  const handleClickCheck = (taskId: string) => {
-    const newState = {
-      ...props.allTasks,
-      tasks: {
-        ...props.allTasks.tasks,
-        [taskId]: {
-          ...props.allTasks.tasks[taskId],
-          complete: !complete,
-        },
-      },
-    };
-    props.updateTaskData(newState);
-  };
+  // const handleClickCheck = (taskId: string) => {
+  //   const newState = {
+  //     ...props.allTasks,
+  //     tasks: {
+  //       ...props.allTasks.tasks,
+  //       [taskId]: {
+  //         ...props.allTasks.tasks[taskId],
+  //         complete: !complete,
+  //       },
+  //     },
+  //   };
+  //   props.updateTaskData(newState);
+  // };
 
   const handleClickDelete = (taskId: string) => {
     console.log("====================================");
@@ -77,12 +77,12 @@ const TaskBar: React.FC<PropsFromRedux & TaskBarProps> = ({
       <ToolButton>
         <FontAwesomeIcon icon={faPen} onClick={() => handleClickEdit(taskId)} />
       </ToolButton>
-      <ToolButton>
+      {/* <ToolButton>
         <FontAwesomeIcon
           icon={faCheck}
           onClick={() => handleClickCheck(taskId)}
         />
-      </ToolButton>
+      </ToolButton> */}
       <ToolButton>
         <FontAwesomeIcon
           icon={faTrash}

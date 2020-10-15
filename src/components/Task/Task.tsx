@@ -1,14 +1,22 @@
 import React from "react";
-import { Container, TaskText } from "./Task.styles";
+import { connect } from "react-redux";
+import mapStoreToProps from "../../store/mapStoreToProps";
+import mapDispatchToProps from "../../store/mapDispatchToProps";
+import { Container, ToolButton, TaskText } from "./Task.styles";
 import { Draggable } from "react-beautiful-dnd";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheckCircle, faCircle } from "@fortawesome/free-regular-svg-icons";
 import TaskBar from "../TaskBar/TaskBar";
+
+type PropsFromRedux = ReturnType<typeof mapStoreToProps> &
+  typeof mapDispatchToProps;
 
 type TaskProps = {
   task: ITask;
   index: number;
 };
 
-class Task extends React.Component<TaskProps> {
+class Task extends React.Component<PropsFromRedux & TaskProps> {
   state = {
     open: false,
     taskId: "",
@@ -20,6 +28,20 @@ class Task extends React.Component<TaskProps> {
 
   onMouseLeave = () => {
     this.setState({ open: false });
+  };
+
+  handleClickCheck = (taskId: string, complete: boolean) => {
+    const newState = {
+      ...this.props.allTasks,
+      tasks: {
+        ...this.props.allTasks.tasks,
+        [taskId]: {
+          ...this.props.allTasks.tasks[taskId],
+          complete: !complete,
+        },
+      },
+    };
+    this.props.updateTaskData(newState);
   };
 
   render() {
@@ -44,6 +66,17 @@ class Task extends React.Component<TaskProps> {
           >
             {/* created separate handle component allows users to only able to drag on the component */}
             {/* <Handle {...provided.dragHandleProps} /> */}
+            <ToolButton>
+              <FontAwesomeIcon
+                icon={this.props.task.complete ? faCheckCircle : faCircle}
+                onClick={() =>
+                  this.handleClickCheck(
+                    this.props.task.id,
+                    this.props.task.complete
+                  )
+                }
+              />
+            </ToolButton>
             <TaskText
               className={this.props.task.id}
               complete={this.props.task.complete}
@@ -63,4 +96,4 @@ class Task extends React.Component<TaskProps> {
   }
 }
 
-export default Task;
+export default connect(mapStoreToProps, mapDispatchToProps)(Task);

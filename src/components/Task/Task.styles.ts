@@ -24,6 +24,18 @@ export const Container = styled.div<TaskStyleProps>`
   position: relative;
 `;
 
+export const ToolButton = styled.button`
+  background: #fff;
+  cursor: pointer;
+  font-size: 0.8em;
+  padding: 2px 4px 2px 0;
+  border: 0;
+
+  &:hover {
+    color: #758bfd;
+  }
+`;
+
 export const TaskText = styled.span<TaskTextProps>`
   text-decoration: ${(props) => props.complete && "line-through"};
 `;
