@@ -1,4 +1,7 @@
 import React from "react";
+import { connect } from "react-redux";
+import mapStoreToProps from "../../store/mapStoreToProps";
+import mapDispatchToProps from "../../store/mapDispatchToProps";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faCheck, faTrash } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
@@ -25,13 +28,21 @@ const ToolButton = styled.button`
   }
 `;
 
+type PropsFromRedux = ReturnType<typeof mapStoreToProps> &
+  typeof mapDispatchToProps;
+
 type TaskBarProps = {
   taskId: string;
+  complete: boolean;
 };
 
 // const spans = document.getElementsByTagName("span");
 
-const TaskBar: React.FC<TaskBarProps> = ({ taskId }) => {
+const TaskBar: React.FC<PropsFromRedux & TaskBarProps> = ({
+  taskId,
+  complete,
+  ...props
+}) => {
   const handleClickEdit = (taskId: string) => {
     console.log("====================================");
     console.log("Edit Button Clicked", taskId);
@@ -42,9 +53,17 @@ const TaskBar: React.FC<TaskBarProps> = ({ taskId }) => {
   };
 
   const handleClickCheck = (taskId: string) => {
-    console.log("====================================");
-    console.log("Check Button Clicked", taskId);
-    console.log("====================================");
+    const newState = {
+      ...props.allTasks,
+      tasks: {
+        ...props.allTasks.tasks,
+        [taskId]: {
+          ...props.allTasks.tasks[taskId],
+          complete: !complete,
+        },
+      },
+    };
+    props.updateTaskData(newState);
   };
 
   const handleClickDelete = (taskId: string) => {
@@ -74,4 +93,4 @@ const TaskBar: React.FC<TaskBarProps> = ({ taskId }) => {
   );
 };
 
-export default TaskBar;
+export default connect(mapStoreToProps, mapDispatchToProps)(TaskBar);

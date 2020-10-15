@@ -1,5 +1,5 @@
 import React from "react";
-import { Container } from "./Task.styles";
+import { Container, TaskText } from "./Task.styles";
 import { Draggable } from "react-beautiful-dnd";
 import TaskBar from "../TaskBar/TaskBar";
 
@@ -44,10 +44,18 @@ class Task extends React.Component<TaskProps> {
           >
             {/* created separate handle component allows users to only able to drag on the component */}
             {/* <Handle {...provided.dragHandleProps} /> */}
-            <span className={this.props.task.id}>
+            <TaskText
+              className={this.props.task.id}
+              complete={this.props.task.complete}
+            >
               {this.props.task.content}
-            </span>
-            {this.state.open && <TaskBar taskId={this.props.task.id} />}
+            </TaskText>
+            {this.state.open && (
+              <TaskBar
+                taskId={this.props.task.id}
+                complete={this.props.task.complete}
+              />
+            )}
           </Container>
         )}
       </Draggable>

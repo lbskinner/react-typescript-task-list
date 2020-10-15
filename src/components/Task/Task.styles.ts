@@ -5,6 +5,9 @@ type TaskStyleProps = {
   isDragDisabled?: boolean;
 };
 
+type TaskTextProps = {
+  complete: boolean;
+};
 export const Container = styled.div<TaskStyleProps>`
   border: 1px solid lightgrey;
   border-radius: 4px;
@@ -19,6 +22,10 @@ export const Container = styled.div<TaskStyleProps>`
 
   display: flex;
   position: relative;
+`;
+
+export const TaskText = styled.span<TaskTextProps>`
+  text-decoration: ${(props) => props.complete && "line-through"};
 `;
 
 export const Handle = styled.div`
