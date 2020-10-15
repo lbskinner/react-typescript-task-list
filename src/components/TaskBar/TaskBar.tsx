@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import mapStoreToProps from "../../store/mapStoreToProps";
 import mapDispatchToProps from "../../store/mapDispatchToProps";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen, faCheck, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import styled from "styled-components";
 
 const ToolBar = styled.div`
