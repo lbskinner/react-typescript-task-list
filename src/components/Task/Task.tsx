@@ -18,19 +18,21 @@ type TaskProps = {
 
 class Task extends React.Component<PropsFromRedux & TaskProps> {
   state = {
-    open: false,
+    showToolBar: false,
     taskId: "",
+    editTask: false,
+    updatedTaskContent: "",
   };
 
   onMouseEnter = (taskId: string) => {
-    this.setState({ open: true, taskId: taskId });
+    this.setState({ showToolBar: true, taskId: taskId });
   };
 
   onMouseLeave = () => {
-    this.setState({ open: false });
+    this.setState({ showToolBar: false });
   };
 
-  handleClickCheck = (taskId: string, complete: boolean) => {
+  handleClickCheckTask = (taskId: string, complete: boolean) => {
     const newState = {
       ...this.props.allTasks,
       tasks: {
@@ -42,6 +44,12 @@ class Task extends React.Component<PropsFromRedux & TaskProps> {
       },
     };
     this.props.updateTaskData(newState);
+  };
+
+  handleClickEditTask = (taskId: string) => {
+    console.log("====================================");
+    console.log("Edit Button Clicked", taskId);
+    console.log("====================================");
   };
 
   render() {
@@ -70,7 +78,7 @@ class Task extends React.Component<PropsFromRedux & TaskProps> {
               <FontAwesomeIcon
                 icon={this.props.task.complete ? faCheckCircle : faCircle}
                 onClick={() =>
-                  this.handleClickCheck(
+                  this.handleClickCheckTask(
                     this.props.task.id,
                     this.props.task.complete
                   )
@@ -83,10 +91,12 @@ class Task extends React.Component<PropsFromRedux & TaskProps> {
             >
               {this.props.task.content}
             </TaskText>
-            {this.state.open && (
+            {this.state.showToolBar && (
               <TaskBar
                 taskId={this.props.task.id}
                 complete={this.props.task.complete}
+                editTask={this.state.editTask}
+                handleClickEditTask={this.handleClickEditTask}
               />
             )}
           </Container>
