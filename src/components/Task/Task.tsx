@@ -50,6 +50,9 @@ class Task extends React.Component<PropsFromRedux & TaskProps> {
     console.log("====================================");
     console.log("Edit Button Clicked", taskId);
     console.log("====================================");
+    this.setState({
+      editTask: true,
+    });
   };
 
   render() {
@@ -74,7 +77,7 @@ class Task extends React.Component<PropsFromRedux & TaskProps> {
           >
             {/* created separate handle component allows users to only able to drag on the component */}
             {/* <Handle {...provided.dragHandleProps} /> */}
-            <ToolButton>
+            <ToolButton disabled={true}>
               <FontAwesomeIcon
                 icon={this.props.task.complete ? faCheckCircle : faCircle}
                 onClick={() =>
@@ -85,12 +88,17 @@ class Task extends React.Component<PropsFromRedux & TaskProps> {
                 }
               />
             </ToolButton>
-            <TaskText
-              className={this.props.task.id}
-              complete={this.props.task.complete}
-            >
-              {this.props.task.content}
-            </TaskText>
+            {!this.state.editTask ? (
+              <TaskText
+                className={this.props.task.id}
+                complete={this.props.task.complete}
+              >
+                {this.props.task.content}
+              </TaskText>
+            ) : (
+              <input type="text" />
+            )}
+
             {this.state.showToolBar && (
               <TaskBar
                 taskId={this.props.task.id}
