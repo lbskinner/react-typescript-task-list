@@ -8,6 +8,10 @@ type TaskStyleProps = {
 type TaskTextProps = {
   complete: boolean;
 };
+
+type CheckButtonProps = {
+  checkDisabled: boolean;
+};
 export const Container = styled.div<TaskStyleProps>`
   border: 1px solid lightgrey;
   border-radius: 4px;
@@ -24,12 +28,13 @@ export const Container = styled.div<TaskStyleProps>`
   position: relative;
 `;
 
-export const ToolButton = styled.button`
+export const ToolButton = styled.button<CheckButtonProps>`
   background: #fff;
   cursor: pointer;
   font-size: 0.8em;
   padding: 2px 4px 2px 0;
   border: 0;
+  pointer-events: ${(props) => (props.checkDisabled ? "none" : "inherit")};
 
   &:hover {
     color: #758bfd;

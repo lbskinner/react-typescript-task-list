@@ -22,6 +22,7 @@ class Task extends React.Component<PropsFromRedux & TaskProps> {
     taskId: "",
     editTask: false,
     updatedTaskContent: "",
+    checkDisabled: false,
   };
 
   onMouseEnter = (taskId: string) => {
@@ -52,6 +53,7 @@ class Task extends React.Component<PropsFromRedux & TaskProps> {
     console.log("====================================");
     this.setState({
       editTask: true,
+      checkDisabled: true,
     });
   };
 
@@ -77,8 +79,15 @@ class Task extends React.Component<PropsFromRedux & TaskProps> {
           >
             {/* created separate handle component allows users to only able to drag on the component */}
             {/* <Handle {...provided.dragHandleProps} /> */}
-            <ToolButton disabled={true}>
+            <ToolButton checkDisabled={this.state.checkDisabled}>
               <FontAwesomeIcon
+                // style={
+                //   this.state.checkDisabled
+                //     ? {
+                //         cursor: "not-allowed",
+                //       }
+                //     : {}
+                // }
                 icon={this.props.task.complete ? faCheckCircle : faCircle}
                 onClick={() =>
                   this.handleClickCheckTask(
@@ -89,23 +98,24 @@ class Task extends React.Component<PropsFromRedux & TaskProps> {
               />
             </ToolButton>
             {!this.state.editTask ? (
-              <TaskText
-                className={this.props.task.id}
-                complete={this.props.task.complete}
-              >
-                {this.props.task.content}
-              </TaskText>
+              <>
+                <TaskText
+                  className={this.props.task.id}
+                  complete={this.props.task.complete}
+                >
+                  {this.props.task.content}
+                </TaskText>
+                {this.state.showToolBar && (
+                  <TaskBar
+                    taskId={this.props.task.id}
+                    complete={this.props.task.complete}
+                    editTask={this.state.editTask}
+                    handleClickEditTask={this.handleClickEditTask}
+                  />
+                )}
+              </>
             ) : (
               <input type="text" />
-            )}
-
-            {this.state.showToolBar && (
-              <TaskBar
-                taskId={this.props.task.id}
-                complete={this.props.task.complete}
-                editTask={this.state.editTask}
-                handleClickEditTask={this.handleClickEditTask}
-              />
             )}
           </Container>
         )}
