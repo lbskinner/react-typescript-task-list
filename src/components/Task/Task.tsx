@@ -1,4 +1,4 @@
-import React from "react";
+import React, { KeyboardEvent } from "react";
 import { connect } from "react-redux";
 import mapStoreToProps from "../../store/mapStoreToProps";
 import mapDispatchToProps from "../../store/mapDispatchToProps";
@@ -36,37 +36,47 @@ class Task extends React.Component<PropsFromRedux & TaskProps> {
   };
 
   componentDidMount() {
-    document.addEventListener("mousedown", this.handleSaveTask);
+    document.addEventListener("mousedown", this.handleClickOutside);
   }
 
   componentWillUnmount() {
-    document.removeEventListener("mousedown", this.handleSaveTask);
+    document.removeEventListener("mousedown", this.handleClickOutside);
   }
 
-  handleSaveTask = (event: MouseEvent) => {
+  handleSaveTask = () => {
+    const taskId = this.state.taskIdClicked;
+    this.setState({
+      editTask: false,
+      checkDisabled: false,
+      taskIdClicked: "",
+    });
+    if (!this.state.updatedTaskContent) return;
+
+    const newState = {
+      ...this.props.allTasks,
+      tasks: {
+        ...this.props.allTasks.tasks,
+        [taskId]: {
+          ...this.props.allTasks.tasks[taskId],
+          content: this.state.updatedTaskContent,
+        },
+      },
+    };
+    this.props.updateTaskData(newState);
+  };
+
+  handlePressEnterKey = (event: KeyboardEvent) => {
+    if (event.key === "Enter") {
+      this.handleSaveTask();
+    }
+  };
+
+  handleClickOutside = (event: MouseEvent) => {
     if (
       this.taskRef.current &&
       !this.taskRef.current.contains(event.target as HTMLInputElement)
     ) {
-      const taskId = this.state.taskIdClicked;
-      this.setState({
-        editTask: false,
-        checkDisabled: false,
-        taskIdClicked: "",
-      });
-      if (!this.state.updatedTaskContent) return;
-
-      const newState = {
-        ...this.props.allTasks,
-        tasks: {
-          ...this.props.allTasks.tasks,
-          [taskId]: {
-            ...this.props.allTasks.tasks[taskId],
-            content: this.state.updatedTaskContent,
-          },
-        },
-      };
-      this.props.updateTaskData(newState);
+      this.handleSaveTask();
     }
   };
 
@@ -157,6 +167,7 @@ class Task extends React.Component<PropsFromRedux & TaskProps> {
                 defaultValue={this.props.task.content}
                 onFocus={(e) => e.currentTarget.select()}
                 onChange={this.handleTaskInputChange}
+                onKeyDown={this.handlePressEnterKey}
                 ref={this.taskRef}
               />
             )}
