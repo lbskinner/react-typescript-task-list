@@ -45,6 +45,20 @@ export const TaskText = styled.span<TaskTextProps>`
   text-decoration: ${(props) => props.complete && "line-through"};
 `;
 
+export const TaskInput = styled.input`
+  border-radius: 2px;
+  border-style: none;
+  // border-bottom-width: thin;
+  font-family: inherit;
+  font-size: 1em;
+  padding: 0;
+
+  &:focus {
+    // outline: #758bfd solid 0.5px;
+    outline: none;
+  }
+`;
+
 export const Handle = styled.div`
   width: 20px;
   height: 20px;

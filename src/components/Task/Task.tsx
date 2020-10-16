@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import mapStoreToProps from "../../store/mapStoreToProps";
 import mapDispatchToProps from "../../store/mapDispatchToProps";
-import { Container, ToolButton, TaskText } from "./Task.styles";
+import { Container, ToolButton, TaskText, TaskInput } from "./Task.styles";
 import { Draggable } from "react-beautiful-dnd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle, faCircle } from "@fortawesome/free-regular-svg-icons";
@@ -108,7 +108,12 @@ class Task extends React.Component<PropsFromRedux & TaskProps> {
                 )}
               </>
             ) : (
-              <input type="text" />
+              <TaskInput
+                type="text"
+                autoFocus
+                defaultValue={this.props.task.content}
+                onFocus={(e) => e.currentTarget.select()}
+              />
             )}
           </Container>
         )}
