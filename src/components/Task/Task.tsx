@@ -17,12 +17,14 @@ type TaskProps = {
 };
 
 class Task extends React.Component<PropsFromRedux & TaskProps> {
+  taskRef = React.createRef<HTMLInputElement>();
   state = {
     showToolBar: false,
     taskId: "",
     editTask: false,
     updatedTaskContent: "",
     checkDisabled: false,
+    taskIdClicked: "",
   };
 
   onMouseEnter = (taskId: string) => {
@@ -31,6 +33,41 @@ class Task extends React.Component<PropsFromRedux & TaskProps> {
 
   onMouseLeave = () => {
     this.setState({ showToolBar: false });
+  };
+
+  componentDidMount() {
+    document.addEventListener("mousedown", this.handleSaveTask);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener("mousedown", this.handleSaveTask);
+  }
+
+  handleSaveTask = (event: MouseEvent) => {
+    if (
+      this.taskRef.current &&
+      !this.taskRef.current.contains(event.target as HTMLInputElement)
+    ) {
+      const taskId = this.state.taskIdClicked;
+      this.setState({
+        editTask: false,
+        checkDisabled: false,
+        taskIdClicked: "",
+      });
+      if (!this.state.updatedTaskContent) return;
+
+      const newState = {
+        ...this.props.allTasks,
+        tasks: {
+          ...this.props.allTasks.tasks,
+          [taskId]: {
+            ...this.props.allTasks.tasks[taskId],
+            content: this.state.updatedTaskContent,
+          },
+        },
+      };
+      this.props.updateTaskData(newState);
+    }
   };
 
   handleClickCheckTask = (taskId: string, complete: boolean) => {
@@ -48,12 +85,18 @@ class Task extends React.Component<PropsFromRedux & TaskProps> {
   };
 
   handleClickEditTask = (taskId: string) => {
-    console.log("====================================");
-    console.log("Edit Button Clicked", taskId);
-    console.log("====================================");
     this.setState({
+      ...this.state,
       editTask: true,
       checkDisabled: true,
+      taskIdClicked: taskId,
+    });
+  };
+
+  handleTaskInputChange = (event: any) => {
+    this.setState({
+      ...this.state,
+      updatedTaskContent: event.target.value,
     });
   };
 
@@ -113,6 +156,8 @@ class Task extends React.Component<PropsFromRedux & TaskProps> {
                 autoFocus
                 defaultValue={this.props.task.content}
                 onFocus={(e) => e.currentTarget.select()}
+                onChange={this.handleTaskInputChange}
+                ref={this.taskRef}
               />
             )}
           </Container>

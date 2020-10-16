@@ -86,7 +86,7 @@ class Column extends React.Component<PropsFromRedux & ColumnProps> {
 
   handleClickColumnTitle = (columnId: string) => {
     this.setState({
-      updateColumnTitle: false,
+      updateColumnTitle: true,
       columnIdClicked: columnId,
     });
   };

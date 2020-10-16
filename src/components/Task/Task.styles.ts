@@ -35,6 +35,7 @@ export const ToolButton = styled.button<CheckButtonProps>`
   padding: 2px 4px 2px 0;
   border: 0;
   pointer-events: ${(props) => (props.checkDisabled ? "none" : "inherit")};
+  opacity: ${(props) => (props.checkDisabled ? "0" : "1")};
 
   &:hover {
     color: #758bfd;
@@ -52,6 +53,7 @@ export const TaskInput = styled.input`
   font-family: inherit;
   font-size: 1em;
   padding: 0;
+  width: 80%;
 
   &:focus {
     // outline: #758bfd solid 0.5px;

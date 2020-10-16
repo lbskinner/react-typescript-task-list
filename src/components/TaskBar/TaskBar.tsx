@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import mapStoreToProps from "../../store/mapStoreToProps";
 import mapDispatchToProps from "../../store/mapDispatchToProps";
