@@ -26,13 +26,15 @@ const ToolButton = styled.button`
 `;
 
 type TaskBarProps = {
+  columnId: string;
   taskId: string;
   complete: boolean;
   handleClickEditTask: (taskId: string) => void;
-  handleClickDeleteTask: (taskId: string) => void;
+  handleClickDeleteTask: (taskId: string, columnId: string) => void;
 };
 
 const TaskBar: React.FC<TaskBarProps> = ({
+  columnId,
   taskId,
   complete,
   handleClickEditTask,
@@ -49,7 +51,7 @@ const TaskBar: React.FC<TaskBarProps> = ({
       <ToolButton>
         <FontAwesomeIcon
           icon={faTrash}
-          onClick={() => handleClickDeleteTask(taskId)}
+          onClick={() => handleClickDeleteTask(taskId, columnId)}
         />
       </ToolButton>
     </ToolBar>

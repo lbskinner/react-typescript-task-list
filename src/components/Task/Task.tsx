@@ -14,6 +14,7 @@ type PropsFromRedux = ReturnType<typeof mapStoreToProps> &
 type TaskProps = {
   task: ITask;
   index: number;
+  columnId: string;
 };
 
 class Task extends React.Component<PropsFromRedux & TaskProps> {
@@ -110,10 +111,26 @@ class Task extends React.Component<PropsFromRedux & TaskProps> {
     });
   };
 
-  handleClickDeleteTask = (taskId: string) => {
-    console.log("====================================");
-    console.log("Delete Button Clicked", taskId);
-    console.log("====================================");
+  handleClickDeleteTask = (taskId: string, columnId: string) => {
+    const updatedTasks = this.props.allTasks.tasks;
+    delete updatedTasks[taskId];
+
+    const updatedColumnsTaskIds = this.props.allTasks.columns[
+      columnId
+    ].taskIds.filter((task) => task !== taskId);
+
+    const newState = {
+      ...this.props.allTasks,
+      tasks: updatedTasks,
+      columns: {
+        ...this.props.allTasks.columns,
+        [columnId]: {
+          ...this.props.allTasks.columns[columnId],
+          taskIds: updatedColumnsTaskIds,
+        },
+      },
+    };
+    this.props.updateTaskData(newState);
   };
 
   render() {
@@ -159,6 +176,7 @@ class Task extends React.Component<PropsFromRedux & TaskProps> {
                 </TaskText>
                 {this.state.showToolBar && (
                   <TaskBar
+                    columnId={this.props.columnId}
                     taskId={this.props.task.id}
                     complete={this.props.task.complete}
                     handleClickEditTask={this.handleClickEditTask}

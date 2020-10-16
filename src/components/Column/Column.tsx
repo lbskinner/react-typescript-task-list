@@ -27,6 +27,7 @@ type ColumnProps = {
 
 type InnerListProps = {
   tasks: ITask[];
+  columnId: string;
 };
 
 type PropsFromRedux = ReturnType<typeof mapStoreToProps> &
@@ -35,7 +36,12 @@ type PropsFromRedux = ReturnType<typeof mapStoreToProps> &
 class InnerList extends React.PureComponent<InnerListProps> {
   render() {
     return this.props.tasks.map((task, index) => (
-      <Task key={task.id} task={task} index={index} />
+      <Task
+        key={task.id}
+        task={task}
+        index={index}
+        columnId={this.props.columnId}
+      />
     ));
   }
 }
@@ -219,7 +225,10 @@ class Column extends React.Component<PropsFromRedux & ColumnProps> {
                   {...provided.droppableProps}
                   isDraggingOver={snapshot.isDraggingOver}
                 >
-                  <InnerList tasks={this.props.tasks} />
+                  <InnerList
+                    tasks={this.props.tasks}
+                    columnId={this.props.column.id}
+                  />
                   {provided.placeholder}
                 </TaskList>
               )}
