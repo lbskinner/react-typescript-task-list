@@ -110,6 +110,12 @@ class Task extends React.Component<PropsFromRedux & TaskProps> {
     });
   };
 
+  handleClickDeleteTask = (taskId: string) => {
+    console.log("====================================");
+    console.log("Delete Button Clicked", taskId);
+    console.log("====================================");
+  };
+
   render() {
     // const isDragDisabled: boolean = this.props.task.id === "task-1";
     return (
@@ -155,8 +161,8 @@ class Task extends React.Component<PropsFromRedux & TaskProps> {
                   <TaskBar
                     taskId={this.props.task.id}
                     complete={this.props.task.complete}
-                    editTask={this.state.editTask}
                     handleClickEditTask={this.handleClickEditTask}
+                    handleClickDeleteTask={this.handleClickDeleteTask}
                   />
                 )}
               </>
