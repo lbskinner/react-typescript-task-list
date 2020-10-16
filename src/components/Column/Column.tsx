@@ -49,38 +49,48 @@ class Column extends React.Component<PropsFromRedux & ColumnProps> {
   };
 
   componentDidMount() {
-    document.addEventListener("mousedown", this.handleSaveTitle);
+    document.addEventListener("mousedown", this.handleClickOutside);
   }
 
   componentWillUnmount() {
-    document.removeEventListener("mousedown", this.handleSaveTitle);
+    document.removeEventListener("mousedown", this.handleClickOutside);
   }
 
-  handleSaveTitle = (event: MouseEvent) => {
+  handleSaveColumnTitle = () => {
+    const columnId = this.state.columnIdClicked;
+    this.setState({
+      updateColumnTitle: false,
+      columnIdClicked: "",
+    });
+    // if no changes made to title exit function
+    if (!this.state.updatedTitle) return;
+
+    const newState = {
+      ...this.props.allTasks,
+      columns: {
+        ...this.props.allTasks.columns,
+        [columnId]: {
+          ...this.props.allTasks.columns[columnId],
+          title: this.state.updatedTitle,
+        },
+      },
+    };
+
+    this.props.updateTaskData(newState);
+  };
+
+  handleClickOutside = (event: MouseEvent) => {
     if (
       this.titleRef.current &&
       !this.titleRef.current.contains(event.target as HTMLInputElement)
     ) {
-      const columnId = this.state.columnIdClicked;
-      this.setState({
-        updateColumnTitle: false,
-        columnIdClicked: "",
-      });
-      // if no changes made to title exit function
-      if (!this.state.updatedTitle) return;
+      this.handleSaveColumnTitle();
+    }
+  };
 
-      const newState = {
-        ...this.props.allTasks,
-        columns: {
-          ...this.props.allTasks.columns,
-          [columnId]: {
-            ...this.props.allTasks.columns[columnId],
-            title: this.state.updatedTitle,
-          },
-        },
-      };
-
-      this.props.updateTaskData(newState);
+  handlePressEnterKey = (event: KeyboardEvent) => {
+    if (event.key === "Enter") {
+      this.handleSaveColumnTitle();
     }
   };
 
@@ -96,31 +106,6 @@ class Column extends React.Component<PropsFromRedux & ColumnProps> {
       ...this.state,
       updatedTitle: event.target.value,
     });
-  };
-
-  handlePressEnterKey = (event: KeyboardEvent) => {
-    if (event.key === "Enter") {
-      const columnId = this.state.columnIdClicked;
-      this.setState({
-        updateColumnTitle: false,
-        columnIdClicked: "",
-      });
-      // if no changes made to title exit function
-      if (!this.state.updatedTitle) return;
-
-      const newState = {
-        ...this.props.allTasks,
-        columns: {
-          ...this.props.allTasks.columns,
-          [columnId]: {
-            ...this.props.allTasks.columns[columnId],
-            title: this.state.updatedTitle,
-          },
-        },
-      };
-
-      this.props.updateTaskData(newState);
-    }
   };
 
   handleDeleteColumn = (columnId: string) => {
