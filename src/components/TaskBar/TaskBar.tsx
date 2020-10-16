@@ -82,7 +82,7 @@ const TaskBar: React.FC<PropsFromRedux & TaskBarProps> = ({
 
   return (
     <ToolBar>
-      <ToolButton>
+      <ToolButton style={complete ? { pointerEvents: "none" } : {}}>
         <FontAwesomeIcon
           icon={faPen}
           onClick={() => handleClickEditTask(taskId)}
