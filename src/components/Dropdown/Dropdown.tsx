@@ -68,30 +68,7 @@ type PropsFromRedux = ReturnType<typeof mapStoreToProps> &
 const Dropdown: React.FC<PropsFromRedux> = ({ updateTaskData, allTasks }) => {
   const [open, setOpen] = useState<boolean>(false);
 
-  // use toggle for open and close dropdown menu when click on menu button
-  // changed approach to mouse hover
-  // const toggleMenu = () => {
-  //   setOpen(!open);
-  // };
-
-  // used useRef and useEffect for close dropdown menu
-  // when click other areas of app
-  // const handleClickOutside = (event: MouseEvent) => {
-  //   if (
-  //     container.current &&
-  //     !container.current.contains(event.target as Element)
-  //   ) {
-  //     setOpen(false);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   document.addEventListener("mousedown", handleClickOutside);
-  //   return () => document.removeEventListener("mousedown", handleClickOutside);
-  // }, []);
-
   const handleAddColumn = () => {
-    // setOpen(false);
     // store all current column ids in an array
     const currentColumnIds = Object.keys(allTasks.columns);
     // get the last column id
@@ -125,7 +102,6 @@ const Dropdown: React.FC<PropsFromRedux> = ({ updateTaskData, allTasks }) => {
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
     >
-      {/* <Container ref={container}> */}
       <Button type="button">☰</Button>
       {open && (
         <DropdownMenu>

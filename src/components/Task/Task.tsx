@@ -141,13 +141,12 @@ class Task extends React.Component<PropsFromRedux & TaskProps> {
             onMouseEnter={() => this.onMouseEnter(this.props.task.id)}
             onMouseLeave={this.onMouseLeave}
             {...provided.draggableProps}
-            // leave the dragHandleProps here allows users to drag anywhere on the task
+            // dragHandleProps allows users to drag anywhere on the task
+            // can also create separate handle component to control where can be dragged
             {...provided.dragHandleProps}
             ref={provided.innerRef}
             isDragging={snapshot.isDragging}
           >
-            {/* created separate handle component allows users to only able to drag on the component */}
-            {/* <Handle {...provided.dragHandleProps} /> */}
             <ToolButton checkDisabled={this.state.checkDisabled}>
               <FontAwesomeIcon
                 icon={this.props.task.complete ? faCheckCircle : faCircle}
