@@ -51,7 +51,9 @@ class App extends React.Component<PropsFromRedux> {
     }
 
     if (type === "column") {
-      const newColumnOrder = Array.from(this.props.allTasks.columnOrder);
+      const newColumnOrder: string[] = Array.from(
+        this.props.allTasks.columnOrder
+      );
       newColumnOrder.splice(source.index, 1);
       newColumnOrder.splice(destination.index, 0, draggableId);
 
