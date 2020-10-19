@@ -134,13 +134,8 @@ class Task extends React.Component<PropsFromRedux & TaskProps> {
   };
 
   render() {
-    // const isDragDisabled: boolean = this.props.task.id === "task-1";
     return (
-      <Draggable
-        draggableId={this.props.task.id}
-        index={this.props.index}
-        // isDragDisabled={isDragDisabled}
-      >
+      <Draggable draggableId={this.props.task.id} index={this.props.index}>
         {(provided, snapshot) => (
           <Container
             onMouseEnter={() => this.onMouseEnter(this.props.task.id)}
@@ -150,8 +145,6 @@ class Task extends React.Component<PropsFromRedux & TaskProps> {
             {...provided.dragHandleProps}
             ref={provided.innerRef}
             isDragging={snapshot.isDragging}
-            // included for style
-            // isDragDisabled={isDragDisabled}
           >
             {/* created separate handle component allows users to only able to drag on the component */}
             {/* <Handle {...provided.dragHandleProps} /> */}

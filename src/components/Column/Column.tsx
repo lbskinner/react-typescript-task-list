@@ -22,7 +22,6 @@ type ColumnProps = {
   type?: string;
   isDropDisabled?: boolean;
   index: number;
-  // handleAddTask: (columnId: string) => void;
 };
 
 type InnerListProps = {
@@ -209,16 +208,8 @@ class Column extends React.Component<PropsFromRedux & ColumnProps> {
                 <FontAwesomeIcon icon={faTrash} />
               </DeleteButton>
             </TitleWrapper>
-            {/* Droppable has on required prop, droppableId 
-        two methods to control where the droppable can be dropped
-        type - type={this.props.column.id === "column-3" ? "done" : "active"}
-        isDropDisabled */}
-            {/* Droppable also has a property 'direction' which is set to 'vertical' by default */}
-            <Droppable
-              droppableId={this.props.column.id}
-              //   isDropDisabled={this.props.isDropDisabled}
-              type="task"
-            >
+
+            <Droppable droppableId={this.props.column.id} type="task">
               {(provided, snapshot) => (
                 <TaskList
                   ref={provided.innerRef}
