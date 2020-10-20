@@ -72,7 +72,7 @@ const Dropdown: React.FC<PropsFromRedux> = ({ updateTaskData, allTasks }) => {
     // store all current column ids in an array
     const currentColumnIds = Object.keys(allTasks.columns);
     let newColumnId: string;
-    // if there are no columns exists
+    // if there are no columns exist
     if (currentColumnIds.length === 0) {
       // ste column id to column-1
       newColumnId = "column-1";
