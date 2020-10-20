@@ -71,17 +71,19 @@ const Dropdown: React.FC<PropsFromRedux> = ({ updateTaskData, allTasks }) => {
   const handleAddColumn = () => {
     // store all current column ids in an array
     const currentColumnIds = Object.keys(allTasks.columns);
-    // get the last column id
-    const lastColumnId = currentColumnIds[currentColumnIds.length - 1];
-    // get the number of the last column id
-    const lastColumnIdNum = parseInt(
-      lastColumnId.charAt(lastColumnId.length - 1)
-    );
-    // set the new column id number to the last column id number + 1
-    // compared to the prior approach, which calculates the new column id
-    // based on the number of columns current exists which can duplicate column id
-    // e.x. delete one of the existing column and then add another column
-    const newColumnId = `column-${lastColumnIdNum + 1}`;
+    let newColumnId: string;
+    // if there are no columns exists
+    if (currentColumnIds.length === 0) {
+      // ste column id to column-1
+      newColumnId = "column-1";
+    } else {
+      // get the last column id
+      const lastColumnId = currentColumnIds[currentColumnIds.length - 1];
+      const regex = /^\D+/g; // find all leading non-digits
+      // replace all leading non-digits with empty string
+      const lastColumnIdNum = parseInt(lastColumnId.replace(regex, ""));
+      newColumnId = `column-${lastColumnIdNum + 1}`;
+    }
     const newState = {
       ...allTasks,
       columns: {
