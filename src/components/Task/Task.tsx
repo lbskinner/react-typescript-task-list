@@ -112,12 +112,12 @@ class Task extends React.Component<PropsFromRedux & TaskProps> {
   };
 
   handleClickDeleteTask = (taskId: string, columnId: string) => {
-    const updatedTasks = this.props.allTasks.tasks;
+    const updatedTasks = { ...this.props.allTasks.tasks };
     delete updatedTasks[taskId];
 
-    const updatedColumnsTaskIds = this.props.allTasks.columns[
-      columnId
-    ].taskIds.filter((task) => task !== taskId);
+    const updatedColumnsTaskIds = [
+      ...this.props.allTasks.columns[columnId].taskIds,
+    ].filter((task) => task !== taskId);
 
     const newState = {
       ...this.props.allTasks,
