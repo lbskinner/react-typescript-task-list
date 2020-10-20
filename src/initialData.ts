@@ -34,6 +34,16 @@ const initialData: InitialData = {
       content: "Drag columns to reorder them",
       complete: false,
     },
+    "task-11": {
+      id: "task-11",
+      content: "Review Leila's code",
+      complete: false,
+    },
+    "task-12": {
+      id: "task-12",
+      content: "Make dentist appointment",
+      complete: false,
+    },
   },
   columns: {
     "column-1": {
@@ -44,12 +54,12 @@ const initialData: InitialData = {
     "column-2": {
       id: "column-2",
       title: "Ethan's Tasks",
-      taskIds: ["task-5", "task-6"],
+      taskIds: ["task-5", "task-6", "task-11"],
     },
     "column-3": {
       id: "column-3",
       title: "Leila's Tasks",
-      taskIds: ["task-7", "task-8"],
+      taskIds: ["task-7", "task-8", "task-12"],
     },
   },
   // Facilitate reordering of the columns
