@@ -10,6 +10,7 @@ export const loadState = () => {
     return { allTasksReducer: JSON.parse(localAllTasksState) };
   } catch (error) {
     // if error, return undefined to let reducer initialize app
+    console.error("Load state from local storage error", error);
     return undefined;
   }
 };
@@ -19,6 +20,6 @@ export const saveState = (reduxState: InitialData) => {
     const localAllTasksState = JSON.stringify(reduxState);
     localStorage.setItem("reduxState", localAllTasksState);
   } catch (error) {
-    console.log("Save to local storage error", error);
+    console.error("Save to local storage error", error);
   }
 };
