@@ -157,14 +157,12 @@ class Column extends React.Component<PropsFromRedux & ColumnProps> {
 
   handleAddTask = (columnId: string) => {
     const currentTaskIds = Object.keys(this.props.allTasks.tasks);
-    let newTaskId;
+    let newTaskId: string;
     if (currentTaskIds.length === 0) {
       newTaskId = "task-1";
     } else {
       const lastTaskId = currentTaskIds[currentTaskIds.length - 1];
-      const regex = /^\D+/g; // find all leading non-digits
-      // replace all leading non-digits with empty string
-      const lastTaskIdNum = parseInt(lastTaskId.replace(regex, ""));
+      const lastTaskIdNum = parseInt(lastTaskId.split("-")[1]);
       newTaskId = `task-${lastTaskIdNum + 1}`;
     }
     const newTaskIdArray = [...this.props.allTasks.columns[columnId].taskIds];
