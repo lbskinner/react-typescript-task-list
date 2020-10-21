@@ -47,7 +47,7 @@ const TaskBar: React.FC<TaskBarProps> = ({
 }) => {
   return (
     <ToolBar>
-      <ToolButton disabled={complete ? true : false}>
+      <ToolButton disabled={complete}>
         <FontAwesomeIcon
           icon={faPen}
           onClick={() => handleClickEditTask(taskId)}
