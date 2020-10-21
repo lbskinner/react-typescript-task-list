@@ -36,9 +36,6 @@ class InnerList extends React.PureComponent<ColumnProps> {
 
 class App extends React.Component<PropsFromRedux> {
   onDragEnd = (result: any) => {
-    console.log(result);
-    document.body.style.backgroundColor = "inherit";
-
     const { destination, source, draggableId, type } = result;
     // do nothing if item is dropped outside of the list
     if (!destination) return;
