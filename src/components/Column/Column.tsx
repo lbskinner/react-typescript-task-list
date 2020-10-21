@@ -15,6 +15,7 @@ import { Droppable, Draggable } from "react-beautiful-dnd";
 import Task from "../Task/Task";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+import getNewId from "../../getNewId";
 
 type ColumnProps = {
   column: IColumn;
@@ -156,15 +157,16 @@ class Column extends React.Component<PropsFromRedux & ColumnProps> {
   };
 
   handleAddTask = (columnId: string) => {
-    const currentTaskIds = Object.keys(this.props.allTasks.tasks);
-    let newTaskId: string;
-    if (currentTaskIds.length === 0) {
-      newTaskId = "task-1";
-    } else {
-      const lastTaskId = currentTaskIds[currentTaskIds.length - 1];
-      const lastTaskIdNum = parseInt(lastTaskId.split("-")[1]);
-      newTaskId = `task-${lastTaskIdNum + 1}`;
-    }
+    // const currentTaskIds = Object.keys(this.props.allTasks.tasks);
+    // let newTaskId: string;
+    // if (currentTaskIds.length === 0) {
+    //   newTaskId = "task-1";
+    // } else {
+    //   const lastTaskId = currentTaskIds[currentTaskIds.length - 1];
+    //   const lastTaskIdNum = parseInt(lastTaskId.split("-")[1]);
+    //   newTaskId = `task-${lastTaskIdNum + 1}`;
+    // }
+    const newTaskId = getNewId(this.props.allTasks.tasks, "task");
     const newTaskIdArray = [...this.props.allTasks.columns[columnId].taskIds];
     newTaskIdArray.push(newTaskId);
     const newState = {

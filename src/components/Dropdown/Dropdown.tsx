@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import mapStoreToProps from "../../store/mapStoreToProps";
 import mapDispatchToProps from "../../store/mapDispatchToProps";
 import styled from "styled-components";
+import getNewId from "../../getNewId";
 
 const Container = styled.div`
   position: relative;
@@ -69,23 +70,7 @@ const Dropdown: React.FC<PropsFromRedux> = ({ updateTaskData, allTasks }) => {
   const [open, setOpen] = useState<boolean>(false);
 
   const handleAddColumn = () => {
-    // store all current column ids in an array
-    const currentColumnIds = Object.keys(allTasks.columns);
-    let newColumnId: string;
-    // if there are no columns exist
-    if (currentColumnIds.length === 0) {
-      // ste column id to column-1
-      newColumnId = "column-1";
-    } else {
-      // get the last column id
-      const lastColumnId = currentColumnIds[currentColumnIds.length - 1];
-
-      // const regex = /^\D+/g; // find all leading non-digits
-      // // replace all leading non-digits with empty string
-      // const lastColumnIdNum = parseInt(lastColumnId.replace(regex, ""));
-      const lastColumnIdNum = parseInt(lastColumnId.split("-")[1]);
-      newColumnId = `column-${lastColumnIdNum + 1}`;
-    }
+    const newColumnId = getNewId(allTasks.columns, "column");
     const newState = {
       ...allTasks,
       columns: {
