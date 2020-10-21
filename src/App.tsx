@@ -11,7 +11,7 @@ const Container = styled.div`
   display: flex;
 `;
 
-const OutterContainer = styled.div`
+const OuterContainer = styled.div`
   margin: 10px;
 `;
 
@@ -51,9 +51,7 @@ class App extends React.Component<PropsFromRedux> {
     }
 
     if (type === "column") {
-      const newColumnOrder: string[] = Array.from(
-        this.props.allTasks.columnOrder
-      );
+      const newColumnOrder = Array.from(this.props.allTasks.columnOrder);
       newColumnOrder.splice(source.index, 1);
       newColumnOrder.splice(destination.index, 0, draggableId);
 
@@ -136,7 +134,7 @@ class App extends React.Component<PropsFromRedux> {
         <NavBar />
         {/* DragDropContext has three callbacks, onDragStart, onDragUpdate and
         onDragEnd(which is the only required one) */}
-        <OutterContainer>
+        <OuterContainer>
           <DragDropContext onDragEnd={this.onDragEnd}>
             <Droppable
               droppableId="all-columns"
@@ -164,7 +162,7 @@ class App extends React.Component<PropsFromRedux> {
               )}
             </Droppable>
           </DragDropContext>
-        </OutterContainer>
+        </OuterContainer>
       </>
     );
   }
