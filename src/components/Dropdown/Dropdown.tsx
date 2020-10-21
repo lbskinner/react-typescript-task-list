@@ -79,9 +79,11 @@ const Dropdown: React.FC<PropsFromRedux> = ({ updateTaskData, allTasks }) => {
     } else {
       // get the last column id
       const lastColumnId = currentColumnIds[currentColumnIds.length - 1];
-      const regex = /^\D+/g; // find all leading non-digits
-      // replace all leading non-digits with empty string
-      const lastColumnIdNum = parseInt(lastColumnId.replace(regex, ""));
+
+      // const regex = /^\D+/g; // find all leading non-digits
+      // // replace all leading non-digits with empty string
+      // const lastColumnIdNum = parseInt(lastColumnId.replace(regex, ""));
+      const lastColumnIdNum = parseInt(lastColumnId.split("-")[1]);
       newColumnId = `column-${lastColumnIdNum + 1}`;
     }
     const newState = {
