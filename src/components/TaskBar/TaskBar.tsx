@@ -23,6 +23,11 @@ const ToolButton = styled.button`
   &:hover {
     color: #758bfd;
   }
+
+  &:disabled {
+    cursor: not-allowed;
+    color: lightgray;
+  }
 `;
 
 type TaskBarProps = {
@@ -42,10 +47,12 @@ const TaskBar: React.FC<TaskBarProps> = ({
 }) => {
   return (
     <ToolBar>
-      <ToolButton style={complete ? { pointerEvents: "none" } : {}}>
+      <ToolButton disabled={complete}>
         <FontAwesomeIcon
           icon={faPen}
           onClick={() => handleClickEditTask(taskId)}
+          // add pointer event none to disable click event
+          style={complete ? { pointerEvents: "none" } : {}}
         />
       </ToolButton>
       <ToolButton>

@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import mapStoreToProps from "../../store/mapStoreToProps";
 import mapDispatchToProps from "../../store/mapDispatchToProps";
 import styled from "styled-components";
+import getNewId from "../../getNewId";
 
 const Container = styled.div`
   position: relative;
@@ -68,43 +69,8 @@ type PropsFromRedux = ReturnType<typeof mapStoreToProps> &
 const Dropdown: React.FC<PropsFromRedux> = ({ updateTaskData, allTasks }) => {
   const [open, setOpen] = useState<boolean>(false);
 
-  // use toggle for open and close dropdown menu when click on menu button
-  // changed approach to mouse hover
-  // const toggleMenu = () => {
-  //   setOpen(!open);
-  // };
-
-  // used useRef and useEffect for close dropdown menu
-  // when click other areas of app
-  // const handleClickOutside = (event: MouseEvent) => {
-  //   if (
-  //     container.current &&
-  //     !container.current.contains(event.target as Element)
-  //   ) {
-  //     setOpen(false);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   document.addEventListener("mousedown", handleClickOutside);
-  //   return () => document.removeEventListener("mousedown", handleClickOutside);
-  // }, []);
-
   const handleAddColumn = () => {
-    // setOpen(false);
-    // store all current column ids in an array
-    const currentColumnIds = Object.keys(allTasks.columns);
-    // get the last column id
-    const lastColumnId = currentColumnIds[currentColumnIds.length - 1];
-    // get the number of the last column id
-    const lastColumnIdNum = parseInt(
-      lastColumnId.charAt(lastColumnId.length - 1)
-    );
-    // set the new column id number to the last column id number + 1
-    // compared to the prior approach, which calculates the new column id
-    // based on the number of columns current exists which can duplicate column id
-    // e.x. delete one of the existing column and then add another column
-    const newColumnId = `column-${lastColumnIdNum + 1}`;
+    const newColumnId = getNewId(allTasks.columns, "column");
     const newState = {
       ...allTasks,
       columns: {
@@ -125,7 +91,6 @@ const Dropdown: React.FC<PropsFromRedux> = ({ updateTaskData, allTasks }) => {
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
     >
-      {/* <Container ref={container}> */}
       <Button type="button">☰</Button>
       {open && (
         <DropdownMenu>

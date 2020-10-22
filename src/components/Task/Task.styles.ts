@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 type TaskStyleProps = {
   isDragging: boolean;
-  isDragDisabled?: boolean;
 };
 
 type TaskTextProps = {
@@ -17,19 +16,14 @@ export const Container = styled.div<TaskStyleProps>`
   border-radius: 4px;
   padding: 8px;
   margin-bottom: 8px;
-  background-color: ${(props) =>
-    props.isDragDisabled
-      ? "lightgrey"
-      : props.isDragging
-      ? "#aeb8fe"
-      : "white"};
+  background-color: ${(props) => (props.isDragging ? "#aeb8fe" : "white")};
 
   display: flex;
   position: relative;
 `;
 
 export const ToolButton = styled.button<CheckButtonProps>`
-  background: #fff;
+  background: inherit;
   cursor: pointer;
   font-size: 0.8em;
   padding: 2px 4px 2px 0;
@@ -59,12 +53,4 @@ export const TaskInput = styled.input`
     // outline: #758bfd solid 0.5px;
     outline: none;
   }
-`;
-
-export const Handle = styled.div`
-  width: 20px;
-  height: 20px;
-  background-color: orange;
-  border-radius: 4px;
-  margin-right: 8px;
 `;

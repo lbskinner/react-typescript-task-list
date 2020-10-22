@@ -15,6 +15,7 @@ import { Droppable, Draggable } from "react-beautiful-dnd";
 import Task from "../Task/Task";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+import getNewId from "../../getNewId";
 
 type ColumnProps = {
   column: IColumn;
@@ -22,7 +23,6 @@ type ColumnProps = {
   type?: string;
   isDropDisabled?: boolean;
   index: number;
-  // handleAddTask: (columnId: string) => void;
 };
 
 type InnerListProps = {
@@ -115,10 +115,12 @@ class Column extends React.Component<PropsFromRedux & ColumnProps> {
   };
 
   handleDeleteColumn = (columnId: string) => {
-    // pull current columns object from all tasks reducer
-    const updatedColumns = this.props.allTasks.columns;
+    // create a copy of all current columns object from all tasks reducer
+    const updatedColumns = { ...this.props.allTasks.columns };
+    // get all taskIds in the column to be deleted
+    const tasksInDeletedColumn = updatedColumns[columnId].taskIds;
     // check to see if there are tasks in the column the user wants to delete
-    if (updatedColumns[columnId].taskIds.length > 0) {
+    if (tasksInDeletedColumn.length > 0) {
       // if there are tasks in the current column, pop up a window to ask user to confirm
       if (
         window.confirm(
@@ -129,17 +131,24 @@ class Column extends React.Component<PropsFromRedux & ColumnProps> {
         return;
       }
     }
+
+    // create a copy of all tasks from all tasks reducer
+    const updatedTasks = { ...this.props.allTasks.tasks };
+    // delete tasks under the column to be deleted from all tasks
+    tasksInDeletedColumn.forEach((taskId) => {
+      delete updatedTasks[taskId];
+    });
     // if user wants to delete the column
     // (either no tasks in column or user confirmed deletion)
     // delete the column with using the columnId
     delete updatedColumns[columnId];
-    // delete the column from the columnOder array
-    const updatedColumnOrder = this.props.allTasks.columnOrder.filter(
+    // delete the column from the copy of columnOder array
+    const updatedColumnOrder = [...this.props.allTasks.columnOrder].filter(
       (column) => column !== columnId
     );
     // create new state with updated column data
     const newState = {
-      ...this.props.allTasks,
+      tasks: updatedTasks,
       columns: updatedColumns,
       columnOrder: updatedColumnOrder,
     };
@@ -148,12 +157,8 @@ class Column extends React.Component<PropsFromRedux & ColumnProps> {
   };
 
   handleAddTask = (columnId: string) => {
-    console.log("Add Task Clicked", columnId);
-    const currentTaskIds = Object.keys(this.props.allTasks.tasks);
-    const lastTaskId = currentTaskIds[currentTaskIds.length - 1];
-    const lastTaskIdNum = parseInt(lastTaskId.charAt(lastTaskId.length - 1));
-    const newTaskId = `task-${lastTaskIdNum + 1}`;
-    const newTaskIdArray = this.props.allTasks.columns[columnId].taskIds;
+    const newTaskId = getNewId(this.props.allTasks.tasks, "task");
+    const newTaskIdArray = [...this.props.allTasks.columns[columnId].taskIds];
     newTaskIdArray.push(newTaskId);
     const newState = {
       ...this.props.allTasks,
@@ -209,16 +214,8 @@ class Column extends React.Component<PropsFromRedux & ColumnProps> {
                 <FontAwesomeIcon icon={faTrash} />
               </DeleteButton>
             </TitleWrapper>
-            {/* Droppable has on required prop, droppableId 
-        two methods to control where the droppable can be dropped
-        type - type={this.props.column.id === "column-3" ? "done" : "active"}
-        isDropDisabled */}
-            {/* Droppable also has a property 'direction' which is set to 'vertical' by default */}
-            <Droppable
-              droppableId={this.props.column.id}
-              //   isDropDisabled={this.props.isDropDisabled}
-              type="task"
-            >
+
+            <Droppable droppableId={this.props.column.id} type="task">
               {(provided, snapshot) => (
                 <TaskList
                   ref={provided.innerRef}

@@ -11,7 +11,7 @@ const Container = styled.div`
   display: flex;
 `;
 
-const OutterContainer = styled.div`
+const OuterContainer = styled.div`
   margin: 10px;
 `;
 
@@ -21,7 +21,6 @@ type ColumnProps = {
   type?: string;
   isDropDisabled?: boolean;
   index: number;
-  // handleAddTask: (columnId: string) => void;
 };
 
 type PropsFromRedux = ReturnType<typeof mapStoreToProps> &
@@ -31,22 +30,12 @@ class InnerList extends React.PureComponent<ColumnProps> {
   render() {
     const { column, taskMap, index } = this.props;
     const tasks = column.taskIds.map((taskId: string) => taskMap[taskId]);
-    return (
-      <Column
-        column={column}
-        tasks={tasks}
-        index={index}
-        // handleAddTask={handleAddTask}
-      />
-    );
+    return <Column column={column} tasks={tasks} index={index} />;
   }
 }
 
 class App extends React.Component<PropsFromRedux> {
   onDragEnd = (result: any) => {
-    console.log(result);
-    document.body.style.backgroundColor = "inherit";
-
     const { destination, source, draggableId, type } = result;
     // do nothing if item is dropped outside of the list
     if (!destination) return;
@@ -142,11 +131,8 @@ class App extends React.Component<PropsFromRedux> {
         <NavBar />
         {/* DragDropContext has three callbacks, onDragStart, onDragUpdate and
         onDragEnd(which is the only required one) */}
-        <OutterContainer>
-          <DragDropContext
-            // onDragStart={this.onDragStart}
-            onDragEnd={this.onDragEnd}
-          >
+        <OuterContainer>
+          <DragDropContext onDragEnd={this.onDragEnd}>
             <Droppable
               droppableId="all-columns"
               direction="horizontal"
@@ -157,9 +143,6 @@ class App extends React.Component<PropsFromRedux> {
                   {this.props.allTasks.columnOrder.map(
                     (columnId: string, index) => {
                       const column = this.props.allTasks.columns[columnId];
-                      // good use to prevent back drag
-                      // const isDropDisabled = index < this.state.homeIndex;
-                      // isDropDisabled={isDropDisabled}
 
                       return (
                         <InnerList
@@ -167,7 +150,6 @@ class App extends React.Component<PropsFromRedux> {
                           column={column}
                           taskMap={this.props.allTasks.tasks}
                           index={index}
-                          // handleAddTask={() => this.handleAddTask(columnId)}
                         />
                       );
                     }
@@ -177,7 +159,7 @@ class App extends React.Component<PropsFromRedux> {
               )}
             </Droppable>
           </DragDropContext>
-        </OutterContainer>
+        </OuterContainer>
       </>
     );
   }
