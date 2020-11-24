@@ -21,27 +21,12 @@ const initialData: InitialData = {
       content: "Click on circle in each task to check or uncheck task",
       complete: false,
     },
-    "task-5": { id: "task-5", content: "Do dishes", complete: false },
-    "task-6": { id: "task-6", content: "Take out trash", complete: false },
+    "task-5": { id: "task-5", content: "Drag tasks between columns", complete: false },
+    "task-6": { id: "task-6", content: "Drag columns to reorder them", complete: false },
     "task-7": { id: "task-7", content: "Make dinner", complete: false },
     "task-8": { id: "task-8", content: "Pay bills", complete: false },
     "task-9": {
       id: "task-9",
-      content: "Drag tasks between columns",
-      complete: false,
-    },
-    "task-10": {
-      id: "task-10",
-      content: "Drag columns to reorder them",
-      complete: false,
-    },
-    "task-11": {
-      id: "task-11",
-      content: "Review Leila's code",
-      complete: false,
-    },
-    "task-12": {
-      id: "task-12",
       content: "Make dentist appointment",
       complete: false,
     },
@@ -50,17 +35,17 @@ const initialData: InitialData = {
     "column-1": {
       id: "column-1",
       title: "Tutorial",
-      taskIds: ["task-1", "task-2", "task-3", "task-4", "task-9", "task-10"],
+      taskIds: ["task-1", "task-2", "task-3", "task-4"],
     },
     "column-2": {
       id: "column-2",
       title: "Ethan's Tasks",
-      taskIds: ["task-5", "task-6", "task-11"],
+      taskIds: ["task-5", "task-6"],
     },
     "column-3": {
       id: "column-3",
       title: "Leila's Tasks",
-      taskIds: ["task-7", "task-8", "task-12"],
+      taskIds: ["task-7", "task-8", "task-9"],
     },
   },
   // Facilitate reordering of the columns
